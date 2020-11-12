@@ -45,6 +45,9 @@
       crossorigin="anonymous"
     />
 
+    <!-- MDBootstrap Datatables  -->
+<link href="./libs/css/datatables.min.css" rel="stylesheet">
+
     <!-- Custom CSS-->
     <link href="./libs/css/style.css" rel="stylesheet" />
 
@@ -235,17 +238,17 @@
           ></canvas>
 
           <h2>Employees</h2>
-          <div class="table-responsive">
-            <table class="table table-striped table-sm">
+          <div class="table-responsive-sm">
+            <table id="selectedColumn" class="table table-striped table-responsive-sm" >
               <thead>
                 <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">First name</th>
-                  <th scope="col">Last name</th>
-                  <th scope="col" class="mobileHidden">Email</th>
-                  <th scope="col" class="mobileHidden">Department</th>
-                  <th scope="col" class="mobileHidden">Location</th>
-                  <th scope="col" class="mobileHidden">Job title</th>
+                  <th class="th-sm" scope="col">#</th>
+                  <th class="th-sm" scope="col">First name</th>
+                  <th class="th-sm" scope="col">Last name</th>
+                  <th class="th-sm mobileHidden" scope="col" >Email</th>
+                  <th class="th-sm mobileHidden" scope="col" >Department</th>
+                  <th class="th-sm mobileHidden" scope="col" >Location</th>
+                  <th class="th-sm mobileHidden" scope="col" >Job title</th>
                   <th scope="col">Actions</th>
                 </tr>
               </thead>
@@ -255,6 +258,7 @@
         </main>
       </div>
     </div>
+    
     </section>
     <!-- Bootstrap core JavaScript -->
     <script
@@ -279,5 +283,8 @@
     
     <!-- Scripts -->
     <script src="./libs/js/script.js"></script>
+
+    <!-- MDBootstrap Datatables  -->
+<script type="text/javascript" src="./libs/js/datatables.min.js"></script>
   </body>
 </html>

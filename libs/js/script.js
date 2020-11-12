@@ -4,6 +4,20 @@ let ys = [];
 let dataDump;
 let charP = [];
 
+$(document).ready(function () {
+  $("#selectedColumn").DataTable({
+    paging: false,
+    aaSorting: [],
+    columnDefs: [
+      {
+        orderable: false,
+        targets: 7,
+      },
+    ],
+  });
+  $(".dataTables_length").addClass("bs-select");
+});
+
 function getAll() {
   $.ajax({
     url: "libs/php/getAll.php",
@@ -133,10 +147,10 @@ function updateChart() {
           label: `List of employees by branch`,
           data: ys,
           fill: false,
-          backgroundColor: "blue",
+          backgroundColor: "#5c6e91",
           borderColor: "blue",
           borderWidth: 1,
-          pointBackgroundColor: "#007bff",
+          pointBackgroundColor: "#5c6e91",
         },
       ],
     },
