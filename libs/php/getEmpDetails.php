@@ -12,8 +12,6 @@
 
 	include("config.php");
 
-	header('Content-Type: application/json; charset=UTF-8');
-
 	$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
 
 	if (mysqli_connect_errno()) {
@@ -32,8 +30,7 @@
 
 	}	
 
-    //  $query = 'SELECT id, COUNT(*), FROM personnel';
-    $query = 'SELECT personnel.id, FROM personnel, JOIN department ON personnel.id = department.departmentID ';
+	$query = 'SELECT p.id, p.firstName, p.lastName, p.email, p.jobTitle, d.name AS department, l.name AS location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE p.lastName = ' . $_REQUEST['lastName'] . ' AND p.firstName = ' . $_REQUEST['firstName'];
 
 	$result = $conn->query($query);
 	
@@ -65,7 +62,9 @@
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 	$output['data'] = $data;
-	
+    
+    header('Content-Type: application/json; charset=UTF-8');
+    
 	mysqli_close($conn);
 
 	echo json_encode($output); 
