@@ -46,7 +46,7 @@
     />
 
     <!-- MDBootstrap Datatables  -->
-<link href="./libs/css/datatables.min.css" rel="stylesheet">
+    <link href="./libs/css/datatables.min.css" rel="stylesheet">
 
     <!-- Custom CSS-->
     <link href="./libs/css/style.css" rel="stylesheet" />
@@ -93,7 +93,7 @@
       </div>
     </section>
     <section id="mainContent">
-    <nav class="navbar navbar-expand-lg sticky-top navbar-light">
+    <nav class="navbar sticky-top navbar-expand-lg navbar-light">
       <a class="navbar-brand" href="#"><i class="fas fa-database"></i> Lorem</a>
       <button
         class="navbar-toggler"
@@ -107,7 +107,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNavDropdown">
-        <ul class="navbar-nav ml-auto flex-nowrap">
+        <ul class="navbar-nav ml-auto flex-nowrap mobileShow">
           <li class="nav-item dropdown active">
             <a
               class="nav-link dropdown-toggle"
@@ -126,14 +126,14 @@
             </div>
           </li>
         </ul>
-        <form class="form-inline">
+        <form class="form-inline mobileShow">
           <input
-            class="form-control mr-sm-2 mr-auto"
+            class="form-control mr-sm-2 mr-auto "
             type="search"
             placeholder="Search"
             aria-label="Search"
           />
-          <button class="btn btn-primary my-2 my-sm-0" type="submit">
+          <button class="btn btn-primary my-2 my-sm-0 mobileShow" type="submit">
             Search
           </button>
         </form>
@@ -186,34 +186,22 @@
             <h6
               class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
             >
-              <span>Saved reports</span>
+              <span>Graphs</span>
               <a class="d-flex align-items-center text-muted" href="#">
                 <span data-feather="plus-circle"></span>
               </a>
             </h6>
             <ul class="nav flex-column mb-2">
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="#" id="graphDep">
                   <span data-feather="file-text"></span>
-                  Current month
+                  By Department
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="#" id="graphLoc">
                   <span data-feather="file-text"></span>
-                  Last quarter
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Social engagement
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Year-end sale
+                  By Location
                 </a>
               </li>
             </ul>

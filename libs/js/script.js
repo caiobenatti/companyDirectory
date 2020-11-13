@@ -3,7 +3,10 @@ let xs = [];
 let ys = [];
 let dataDump;
 let charP = [];
+let label;
+let myChart = null;
 
+// Loading of datatables
 $(document).ready(function () {
   $("#selectedColumn").DataTable({
     paging: false,
@@ -18,6 +21,24 @@ $(document).ready(function () {
   $(".dataTables_length").addClass("bs-select");
 });
 
+// Event listener
+$("#graphDep").click(function () {
+  graphDepartment(), updateChart();
+});
+
+$("#graphLoc").click(function () {
+  graphLocation(), updateChart();
+});
+
+$(document).on("click", "#buttonMore", function (e) {
+  getEmpDet(
+    JSON.stringify(this.value.split(" ")[1]),
+    JSON.stringify(this.value.split(" ")[0])
+  );
+});
+
+// Functions for populating data
+
 function getAll() {
   $.ajax({
     url: "libs/php/getAll.php",
@@ -26,7 +47,7 @@ function getAll() {
     success: function (result) {
       if (result.status.code == 200) {
         employees = result;
-        mainChart();
+        graphDepartment();
         updateChart();
         $("#employeeList").html("");
         for (let i = 0; i < Object.keys(result.data).length; i++) {
@@ -53,17 +74,6 @@ function getAll() {
   });
 }
 
-$(document).on("click", "#buttonMore", function (e) {
-  getEmpDet(
-    JSON.stringify(this.value.split(" ")[1]),
-    JSON.stringify(this.value.split(" ")[0])
-  );
-  //   console.log(
-  //     JSON.stringify(this.value.split(" ")[1]),
-  //     JSON.stringify(this.value.split(" ")[0])
-  //   );
-});
-
 function getEmpDet(firstName, lastName) {
   $.ajax({
     url: "libs/php/getEmpDetails.php",
@@ -74,7 +84,6 @@ function getEmpDet(firstName, lastName) {
       lastName: lastName,
     },
     success: function (result) {
-      //console.log("employee details");
       if (result.status.code == 200) {
         console.log(result);
         // emptyTable("#table-details");
@@ -133,7 +142,6 @@ function getEmpDet(firstName, lastName) {
 
 // Updates the chart with new information
 function updateChart() {
-  let myChart = null;
   if (myChart != null) {
     myChart.destroy();
   }
@@ -144,7 +152,7 @@ function updateChart() {
       labels: xs,
       datasets: [
         {
-          label: `List of employees by branch`,
+          label: label,
           data: ys,
           fill: false,
           backgroundColor: "#5c6e91",
@@ -167,17 +175,52 @@ function updateChart() {
     },
   });
 }
-function mainChart() {
-  const keyed = employees.data.map((o) => [JSON.stringify([o.department]), o]);
-  const map = new Map(
-    keyed.map(([key, { department }]) => [key, { department, count: 0 }])
-  );
-  keyed.forEach(([key, o]) => map.get(key).count++);
-  chartP = Array.from(map.values());
-  xs = [];
-  ys = [];
-  chartP.forEach((element) => xs.push(element.department));
-  chartP.forEach((element) => ys.push(element.count));
+
+// Gets the information for both graphs
+function graphDepartment() {
+  $.ajax({
+    url: "libs/php/read/getDeptGraph.php",
+    type: "GET",
+    dataType: "json",
+    success: function (result) {
+      if (result.status.code == 200) {
+        xs = [];
+        ys = [];
+        result.data.forEach((element) => xs.push(element.name));
+        result.data.forEach((element) => ys.push(element["COUNT(*)"]));
+        label = "Employees on each Department";
+      }
+    },
+  });
+}
+
+function graphLocation() {
+  //   const keyed = employees.data.map((o) => [JSON.stringify([o.location]), o]);
+  //   const map = new Map(
+  //     keyed.map(([key, { location }]) => [key, { location, count: 0 }])
+  //   );
+  //   keyed.forEach(([key, o]) => map.get(key).count++);
+  //   chartP = Array.from(map.values());
+  //   xs = [];
+  //   ys = [];
+  //   chartP.forEach((element) => xs.push(element.location));
+  //   chartP.forEach((element) => ys.push(element.count));
+  //   label = "Employees per Location";
+  $.ajax({
+    url: "libs/php/read/getLocGraph.php",
+    type: "GET",
+    dataType: "json",
+    success: function (result) {
+      if (result.status.code == 200) {
+        console.log(result);
+        xs = [];
+        ys = [];
+        result.data.forEach((element) => xs.push(element.name));
+        result.data.forEach((element) => ys.push(element["COUNT(*)"]));
+        label = "Employees on each Branch";
+      }
+    },
+  });
 }
 
 getAll();
