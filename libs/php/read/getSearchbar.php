@@ -1,3 +1,4 @@
+
 <?php
 
 	// example use from browser
@@ -10,7 +11,7 @@
 
 	$executionStartTime = microtime(true);
 
-	include("config.php");
+	include("../config.php");
 
 	header('Content-Type: application/json; charset=UTF-8');
 
@@ -31,10 +32,9 @@
 		exit;
 
 	}	
-
-    //  $query = 'SELECT id, COUNT(*), FROM personnel';
-    $query = 'SELECT personnel.id, FROM personnel, JOIN department ON personnel.id = department.departmentID ';
-
+    $search = $_REQUEST['txt'];
+        $query = "SELECT personnel.lastName, personnel.firstName, personnel.jobTitle, personnel.email, department.name as department, location.name as location  FROM personnel LEFT JOIN department ON personnel.departmentID = department.id LEFT JOIN location ON location.id = department.locationID WHERE  personnel.firstName LIKE '%".$search."%' OR personnel.lastName LIKE '%".$search."%' OR personnel.email LIKE '%".$search."%' OR personnel.jobTitle LIKE '%".$search."%' OR  personnel.departmentID LIKE '%".$search."%' OR department.name LIKE '%".$search."%' OR location.name  LIKE '%".$search."%' ORDER BY personnel.lastName, personnel.firstName, department.name, location.name";
+    
 	$result = $conn->query($query);
 	
 	if (!$result) {
