@@ -25,32 +25,25 @@ body {
 
 .form-control:focus {
   box-shadow: none;
-  border-color: #ba68c8;
+  border-color: #007bff;
 }
 
 .profile-button {
-  background: #ba68c8;
-  box-shadow: none;
-  border: none;
+  margin-right: 10px;
 }
 
-.profile-button:hover {
-  background: #682773;
+#deleteProfile {
+  margin: 0;
 }
 
 .profile-button:focus {
-  background: #682773;
+  background: #007bff;
   box-shadow: none;
 }
 
 .profile-button:active {
-  background: #682773;
+  background: #007bff;
   box-shadow: none;
-}
-
-.back:hover {
-  color: #682773;
-  cursor: pointer;
 }
 
 .smallText {
@@ -64,6 +57,10 @@ body {
   margin-right: 1.5em;
   margin-top: 0.9em;
   size: 1em;
+}
+
+h6:hover {
+  text-decoration: underline #007bff;
 }
 
 /* FORM for Login */

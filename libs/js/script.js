@@ -23,6 +23,14 @@ $(document).ready(function () {
 });
 
 // Event listener
+$(document).on("click", "#buttonMore", function (e) {
+  getEmpDet(
+    JSON.stringify(this.value.split(" ")[1]),
+    JSON.stringify(this.value.split(" ")[0])
+  );
+  $("#empModal").modal("show");
+});
+
 $("#graphDep").click(function () {
   graphDepartment();
 });
@@ -42,6 +50,26 @@ $("#saveProfile").click(function () {
 $("#searchText").keyup(function () {
   let txt = $(this).val();
   searchBar(txt);
+});
+
+$("#navbarDashboard").click(function () {
+  graphLocation();
+  getAll();
+  $("#topMain").show();
+});
+
+$("#navbarEmployees").click(function () {
+  graphLocation();
+  getAll();
+});
+
+$("#navbarDepartments").click(function () {
+  graphDepartment();
+  //   $("#topMain").hide();
+});
+
+$("#navbarLocations").click(function () {
+  graphLocation();
 });
 
 function searchBar(txt) {
@@ -75,14 +103,6 @@ function searchBar(txt) {
     },
   });
 }
-
-$(document).on("click", "#buttonMore", function (e) {
-  getEmpDet(
-    JSON.stringify(this.value.split(" ")[1]),
-    JSON.stringify(this.value.split(" ")[0])
-  );
-  $("#empModal").modal("show");
-});
 
 // Functions for populating data
 
@@ -133,17 +153,17 @@ function getEmpDet(firstName, lastName) {
     success: function (result) {
       if (result.status.code == 200) {
         $("#fullName").html(
-          `${result["data"][0]["firstName"]} ${result["data"][0]["lastName"]}`
+          `${result.data[0].firstName} ${result.data[0].lastName}`
         );
-        $("#emailHeader").html(`${result["data"][0]["email"]}`);
-        $("#locationHeader").html(`${result["data"][0]["location"]}`);
-        $("#firstName").val(result["data"][0]["firstName"]);
-        $("#lastName").val(result["data"][0]["lastName"]);
-        $("#email").val(result["data"][0]["email"]);
-        $("#id").val(result["data"][0]["id"]);
-        $("#department").val(result["data"][0]["department"]);
-        $("#location").val(result["data"][0]["location"]);
-        $("#jobtitle").val(result["data"][0]["jobTitle"]);
+        $("#emailHeader").html(`${result.data[0].email}`);
+        $("#locationHeader").html(`${result.data[0].location}`);
+        $("#firstName").val(result.data[0].firstName);
+        $("#lastName").val(result.data[0].lastName);
+        $("#email").val(result.data[0].email);
+        $("#id").val(result.data[0].id);
+        $("#department").val(result.data[0].department);
+        $("#location").val(result.data[0].location);
+        $("#jobtitle").val(result.data[0].jobTitle);
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -152,6 +172,43 @@ function getEmpDet(firstName, lastName) {
     },
   });
 }
+
+// $("#form-edit-employee")
+//   .validator()
+//   .on("submit", function (e) {
+//     if (!e.isDefaultPrevented()) {
+//       $.ajax({
+//         url: "libs/php/updateEmployeeDetails.php",
+//         type: "POST",
+//         dataType: "json",
+//         data: {
+//           first: JSON.stringify(capitalize($("#input-first-edit").val())),
+//           last: JSON.stringify(capitalize($("#input-last-edit").val())),
+//           email: JSON.stringify($("#input-email-edit").val()),
+//           job: JSON.stringify(capitalize($("#input-title-edit").val())),
+//           depID: JSON.stringify($("#select-department-edit").val()),
+//           id: JSON.parse($("#details-id").html()),
+//         },
+//         success: function (result) {
+//           if (result.status.code == 200) {
+//             console.log(result);
+//             displayAllEmployees();
+//             $("#editModal").modal("hide");
+//             $("#check-edit").prop("checked", false);
+//             getEmployeeDetails(
+//               JSON.stringify(capitalize($("#input-first-edit").val())),
+//               JSON.stringify(capitalize($("#input-last-edit").val()))
+//             );
+//             $("#editModal").modal({ refresh: true });
+//           }
+//         },
+//         error: function (jqXHR, textStatus, errorThrown) {
+//           alert(`Database error: ${errorThrown}`);
+//         },
+//       });
+//     }
+//     e.preventDefault();
+//   });
 
 // Updates the chart with new information
 function updateChart() {
