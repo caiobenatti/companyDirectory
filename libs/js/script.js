@@ -85,11 +85,20 @@ function getAll() {
       if (result.status.code == 200) {
         employees = result;
         graphDepartment();
-
-        $("#employeeList").html("");
+        $("#trHeader").html("");
+        $("#mainList").html("");
         $("#headerMain").html("Employees");
+        $("#trHeader").append(`
+        <th class="th-sm" scope="col">#</th>
+              <th class="th-sm" scope="col">First name</th>
+              <th class="th-sm" scope="col">Last name</th>
+              <th class="th-sm mobileHidden" scope="col">Email</th>
+              <th class="th-sm mobileHidden" scope="col">Department</th>
+              <th class="th-sm mobileHidden" scope="col">Location</th>
+              <th class="th-sm mobileHidden" scope="col">Job title</th>
+              <th scope="col">Actions</th>`);
         for (let i = 0; i < Object.keys(result.data).length; i++) {
-          $("#employeeList").append(`
+          $("#mainList").append(`
         <tr>
         <th scope="row">${i + 1}</th>
         <td>${result.data[i].firstName}</td>
@@ -120,29 +129,32 @@ function getDepartments() {
     success: function (result) {
       if (result.status.code == 200) {
         employees = result;
+        $("#trHeader").html("");
         $("#headerMain").html("Departments");
-        //         graphDepartment();
+        $("#trHeader").append(`
+        <th class="th-sm" scope="col">#</th>
+              <th class="th-sm" scope="col">Department Name</th>
+              <th class="th-sm" scope="col">Location</th>
 
-        //         $("#employeeList").html("");
-        //         for (let i = 0; i < Object.keys(result.data).length; i++) {
-        //           $("#employeeList").append(`
-        //         <tr>
-        //         <th scope="row">${i + 1}</th>
-        //         <td>${result.data[i].firstName}</td>
-        //         <td>${result.data[i].lastName}</td>
-        //         <td class="mobileHidden">${result.data[i].email}</td>
-        //         <td class="mobileHidden">${result.data[i].department}</td>
-        //          <td class="mobileHidden">${result.data[i].location}</td>
-        //         <td class="mobileHidden">${result.data[i].jobTitle}</td>
-        //         <td>
-        //         <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonMore" value="${
-        //           result.data[i].lastName
-        //         } ${result.data[i].firstName}">
-        //          More
-        //         </button>
-        //           </td>
-        // </tr>`);
-        //         }
+              <th scope="col">Actions</th>`);
+        graphDepartment();
+
+        $("#mainList").html("");
+        for (let i = 0; i < Object.keys(result.data).length; i++) {
+          $("#mainList").append(`
+                <tr>
+                <th scope="row">${i + 1}</th>
+                <td>${result.data[i].id}</td>
+                <td>${result.data[i].name}</td>
+                <td>
+        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonMore" value="${
+          result.data[i].id
+        }">
+         More
+        </button>
+          </td>
+        </tr>`);
+        }
       }
     },
   });
@@ -188,10 +200,10 @@ function searchBar(txt) {
     data: { txt },
     dataType: "json",
     success: function (result) {
-      $("#employeeList").html("");
+      $("#mainList").html("");
       $("#headerMain").html("Search Result");
       for (let i = 0; i < Object.keys(result.data).length; i++) {
-        $("#employeeList").append(`
+        $("#mainList").append(`
         <tr>
         <th scope="row">${i + 1}</th>
         <td>${result.data[i].firstName}</td>
