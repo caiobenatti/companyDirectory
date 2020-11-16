@@ -60,12 +60,28 @@ $("#navbarDashboard").click(function () {
   $("#topMain").show();
 });
 
+$("#navbarLeftDashboard").click(function () {
+  graphLocation();
+  getAll();
+  $("#topMain").show();
+});
+
 $("#navbarEmployees").click(function () {
   graphLocation();
   getAll();
 });
 
+$("#navbarLeftEmployees").click(function () {
+  graphLocation();
+  getAll();
+});
+
 $("#navbarDepartments").click(function () {
+  graphDepartment();
+  getDepartments();
+});
+
+$("#navbarLeftDepartments").click(function () {
   graphDepartment();
   getDepartments();
 });
@@ -144,8 +160,9 @@ function getDepartments() {
           $("#mainList").append(`
                 <tr>
                 <th scope="row">${i + 1}</th>
-                <td>${result.data[i].id}</td>
                 <td>${result.data[i].name}</td>
+                <td>${result.data[i].location}</td>
+                
                 <td>
         <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonMore" value="${
           result.data[i].id
