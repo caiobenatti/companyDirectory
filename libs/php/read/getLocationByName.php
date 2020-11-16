@@ -1,16 +1,17 @@
 <?php
 
-	// example use from browser
-	// http://localhost/companydirectory/libs/php/getAll.php
 
-	// remove next two lines for production
+	// example use from browser
+	// http://localhost/companydirectory/libs/php/getDepartmentByID.php?id=2
 	
+	// remove next two lines for production
+
 	ini_set('display_errors', 'On');
 	error_reporting(E_ALL);
 
 	$executionStartTime = microtime(true);
 
-	include("../config.php");
+	include("config.php");
 
 	$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
 
@@ -21,18 +22,18 @@
 		$output['status']['description'] = "database unavailable";
 		$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
 		$output['data'] = [];
-
+		
 		mysqli_close($conn);
 
-		echo json_encode($output);
+		echo json_encode($output); 
 
 		exit;
 
 	}	
 
-	$query = 'UPDATE personnel SET firstName = ' . $_REQUEST['first'] . ', lastName = ' . $_REQUEST['last'] . ', email = ' . $_REQUEST['email'];
-	// . ', jobTitle = ' . $_REQUEST['jobTitle']  . ', departmentID = ' . $_REQUEST['departmentID'] . ' WHERE id = ' . $_REQUEST['id']
+	// $_REQUEST used for development / debugging. Remember to cange to $_POST for production
 
+	$query = 'SELECT * FROM personnel LEFT JOIN department ON department.id = personnel.departmentID LEFT JOIN location on location.id = department.locationID WHERE location.name= ' . $_REQUEST['name'];
 
 	$result = $conn->query($query);
 	
@@ -50,15 +51,23 @@
 		exit;
 
 	}
+   
+   	$data = [];
+
+	while ($row = mysqli_fetch_assoc($result)) {
+
+		array_push($data, $row);
+
+	}
 
 	$output['status']['code'] = "200";
 	$output['status']['name'] = "ok";
 	$output['status']['description'] = "success";
 	$output['status']['returnedIn'] = (microtime(true) - $executionStartTime) / 1000 . " ms";
+	$output['data'] = $data;
 
-    
-    header('Content-Type: application/json; charset=UTF-8');
-    
+	header('Content-Type: application/json; charset=UTF-8');
+	
 	mysqli_close($conn);
 
 	echo json_encode($output); 

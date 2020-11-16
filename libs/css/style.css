@@ -225,16 +225,16 @@ h6:hover {
   box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
 }
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .mobileHidden {
     display: none;
   }
   .mobileShow {
-    display: inline-flex;
+    display: flex;
   }
-}
+} */
 
-@media (max-width: 768px) {
+@media (max-width: 992px) {
   .mobileHidden {
     display: none;
   }

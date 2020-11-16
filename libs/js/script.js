@@ -10,8 +10,8 @@ let myChart = null;
 $(document).ready(function () {
   $("#selectedColumn").DataTable({
     paging: false,
-    searching: false,
     aaSorting: [],
+    bFilter: false,
     columnDefs: [
       {
         orderable: false,
@@ -33,6 +33,7 @@ $(document).on("click", "#buttonMore", function (e) {
 
 $("#graphDep").click(function () {
   graphDepartment();
+  getDepartments();
 });
 
 $("#graphLoc").click(function () {
@@ -45,6 +46,7 @@ $("#editProfile").click(function () {
 
 $("#saveProfile").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
+  saveProfile();
 });
 
 $("#searchText").keyup(function () {
@@ -65,44 +67,12 @@ $("#navbarEmployees").click(function () {
 
 $("#navbarDepartments").click(function () {
   graphDepartment();
-  //   $("#topMain").hide();
+  getDepartments();
 });
 
 $("#navbarLocations").click(function () {
   graphLocation();
 });
-
-function searchBar(txt) {
-  $.ajax({
-    url: "libs/php/read/getSearchbar.php",
-    type: "POST",
-    data: { txt },
-    dataType: "json",
-    success: function (result) {
-      console.log(result);
-      $("#employeeList").html("");
-      for (let i = 0; i < Object.keys(result.data).length; i++) {
-        $("#employeeList").append(`
-        <tr>
-        <th scope="row">${i + 1}</th>
-        <td>${result.data[i].firstName}</td>
-        <td>${result.data[i].lastName}</td>
-        <td class="mobileHidden">${result.data[i].email}</td>
-        <td class="mobileHidden">${result.data[i].department}</td>
-         <td class="mobileHidden">${result.data[i].location}</td>
-        <td class="mobileHidden">${result.data[i].jobTitle}</td>
-        <td>
-        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonMore" value="${
-          result.data[i].lastName
-        } ${result.data[i].firstName}">
-         More
-        </button>
-          </td>
-</tr>`);
-      }
-    },
-  });
-}
 
 // Functions for populating data
 
@@ -117,6 +87,7 @@ function getAll() {
         graphDepartment();
 
         $("#employeeList").html("");
+        $("#headerMain").html("Employees");
         for (let i = 0; i < Object.keys(result.data).length; i++) {
           $("#employeeList").append(`
         <tr>
@@ -141,6 +112,42 @@ function getAll() {
   });
 }
 
+function getDepartments() {
+  $.ajax({
+    url: "libs/php/read/getAllDepartments.php",
+    type: "GET",
+    dataType: "json",
+    success: function (result) {
+      if (result.status.code == 200) {
+        employees = result;
+        $("#headerMain").html("Departments");
+        //         graphDepartment();
+
+        //         $("#employeeList").html("");
+        //         for (let i = 0; i < Object.keys(result.data).length; i++) {
+        //           $("#employeeList").append(`
+        //         <tr>
+        //         <th scope="row">${i + 1}</th>
+        //         <td>${result.data[i].firstName}</td>
+        //         <td>${result.data[i].lastName}</td>
+        //         <td class="mobileHidden">${result.data[i].email}</td>
+        //         <td class="mobileHidden">${result.data[i].department}</td>
+        //          <td class="mobileHidden">${result.data[i].location}</td>
+        //         <td class="mobileHidden">${result.data[i].jobTitle}</td>
+        //         <td>
+        //         <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonMore" value="${
+        //           result.data[i].lastName
+        //         } ${result.data[i].firstName}">
+        //          More
+        //         </button>
+        //           </td>
+        // </tr>`);
+        //         }
+      }
+    },
+  });
+}
+
 function getEmpDet(firstName, lastName) {
   $.ajax({
     url: "libs/php/read/getEmpDetails.php",
@@ -152,6 +159,7 @@ function getEmpDet(firstName, lastName) {
     },
     success: function (result) {
       if (result.status.code == 200) {
+        console.log(result);
         $("#fullName").html(
           `${result.data[0].firstName} ${result.data[0].lastName}`
         );
@@ -173,42 +181,68 @@ function getEmpDet(firstName, lastName) {
   });
 }
 
-// $("#form-edit-employee")
-//   .validator()
-//   .on("submit", function (e) {
-//     if (!e.isDefaultPrevented()) {
-//       $.ajax({
-//         url: "libs/php/updateEmployeeDetails.php",
-//         type: "POST",
-//         dataType: "json",
-//         data: {
-//           first: JSON.stringify(capitalize($("#input-first-edit").val())),
-//           last: JSON.stringify(capitalize($("#input-last-edit").val())),
-//           email: JSON.stringify($("#input-email-edit").val()),
-//           job: JSON.stringify(capitalize($("#input-title-edit").val())),
-//           depID: JSON.stringify($("#select-department-edit").val()),
-//           id: JSON.parse($("#details-id").html()),
-//         },
-//         success: function (result) {
-//           if (result.status.code == 200) {
-//             console.log(result);
-//             displayAllEmployees();
-//             $("#editModal").modal("hide");
-//             $("#check-edit").prop("checked", false);
-//             getEmployeeDetails(
-//               JSON.stringify(capitalize($("#input-first-edit").val())),
-//               JSON.stringify(capitalize($("#input-last-edit").val()))
-//             );
-//             $("#editModal").modal({ refresh: true });
-//           }
-//         },
-//         error: function (jqXHR, textStatus, errorThrown) {
-//           alert(`Database error: ${errorThrown}`);
-//         },
-//       });
-//     }
-//     e.preventDefault();
-//   });
+function searchBar(txt) {
+  $.ajax({
+    url: "libs/php/read/getSearchbar.php",
+    type: "POST",
+    data: { txt },
+    dataType: "json",
+    success: function (result) {
+      $("#employeeList").html("");
+      $("#headerMain").html("Search Result");
+      for (let i = 0; i < Object.keys(result.data).length; i++) {
+        $("#employeeList").append(`
+        <tr>
+        <th scope="row">${i + 1}</th>
+        <td>${result.data[i].firstName}</td>
+        <td>${result.data[i].lastName}</td>
+        <td class="mobileHidden">${result.data[i].email}</td>
+        <td class="mobileHidden">${result.data[i].department}</td>
+         <td class="mobileHidden">${result.data[i].location}</td>
+        <td class="mobileHidden">${result.data[i].jobTitle}</td>
+        <td>
+        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonMore" value="${
+          result.data[i].lastName
+        } ${result.data[i].firstName}">
+         More
+        </button>
+          </td>
+</tr>`);
+      }
+    },
+  });
+}
+
+function saveProfile() {
+  $.ajax({
+    url: "libs/php/update/updateEmpDetails.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      first: JSON.stringify($("#firstName").val()),
+      last: JSON.stringify($("#lastName").val()),
+      email: JSON.stringify($("#email").val()),
+      // jobTitle: JSON.stringify($("jobtitle").val()),
+      // depID: JSON.stringify($("department").val()),
+      // id: JSON.parse($("#id").val()),
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        console.log(result);
+        console.log("Success");
+        // displayAllEmployees();
+        // getEmployeeDetails(
+        //   JSON.stringify(capitalize($("#input-first-edit").val())),
+        //   JSON.stringify(capitalize($("#input-last-edit").val()))
+        // );
+        // $("#empModal").modal({ refresh: true });
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(`Database error: ${jqXHR} ${textStatus} ${errorThrown}`);
+    },
+  });
+}
 
 // Updates the chart with new information
 function updateChart() {
