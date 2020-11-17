@@ -30,8 +30,7 @@
 
 	}	
 
-	$query = 'UPDATE personnel SET firstName = ' . $_REQUEST['first'] . ', lastName = ' . $_REQUEST['last'] . ', email = ' . $_REQUEST['email'];
-	// . ', jobTitle = ' . $_REQUEST['jobTitle']  . ', departmentID = ' . $_REQUEST['departmentID'] . ' WHERE id = ' . $_REQUEST['id']
+	$query = 'UPDATE personnel SET firstName = ' . $_REQUEST['first'] . ', lastName = ' . $_REQUEST['last'] . ', email = ' . $_REQUEST['email']  . ', jobTitle = ' . $_REQUEST['jobTitle']  . ', departmentID = ' . $_REQUEST['depID'] . ' WHERE id = ' . $_REQUEST['id'];
 
 
 	$result = $conn->query($query);

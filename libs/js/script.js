@@ -7,20 +7,20 @@ let label;
 let myChart = null;
 
 // Loading of datatables
-$(document).ready(function () {
-  $("#selectedColumn").DataTable({
-    paging: false,
-    aaSorting: [],
-    bFilter: false,
-    columnDefs: [
-      {
-        orderable: false,
-        targets: 7,
-      },
-    ],
-  });
-  $(".dataTables_length").addClass("bs-select");
-});
+// $(document).ready(function () {
+//   $("#selectedColumn").DataTable({
+//     paging: false,
+//     aaSorting: [],
+//     bFilter: false,
+//     columnDefs: [
+//       {
+//         orderable: false,
+//         targets: 7,
+//       },
+//     ],
+//   });
+//   $(".dataTables_length").addClass("bs-select");
+// });
 
 // Event listener
 $(document).on("click", "#buttonMore", function (e) {
@@ -251,9 +251,9 @@ function saveProfile() {
       first: JSON.stringify($("#firstName").val()),
       last: JSON.stringify($("#lastName").val()),
       email: JSON.stringify($("#email").val()),
-      // jobTitle: JSON.stringify($("jobtitle").val()),
-      // depID: JSON.stringify($("department").val()),
-      // id: JSON.parse($("#id").val()),
+      jobTitle: JSON.stringify($("#jobtitle").val()),
+      depID: JSON.stringify($("#department").val()),
+      id: JSON.parse($("#id").val()),
     },
     success: function (result) {
       if (result.status.code == 200) {

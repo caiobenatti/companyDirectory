@@ -149,9 +149,15 @@ h6:hover {
   top: 0;
   bottom: 0;
   left: 0;
-  padding: 72px 0 0; /* Height of navbar */
+  z-index: 100; /* Behind the navbar */
+  padding: 48px 0 0; /* Height of navbar */
   box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.1);
-  background-color: #dbe2ef;
+}
+
+@media (max-width: 767.98px) {
+  .sidebar {
+    top: 5rem;
+  }
 }
 
 .sidebar-sticky {
@@ -181,7 +187,7 @@ h6:hover {
 }
 
 .sidebar .nav-link.active {
-  color: #007bff;
+  color: #5c6e91;
 }
 
 .sidebar .nav-link:hover .feather,
@@ -197,16 +203,6 @@ h6:hover {
 /*
  * Navbar
  */
-.navbar {
-  background-color: #dbe2ef;
-  /* z-index: 1000; */
-}
-
-.navbar-brand {
-  padding: 1rem;
-  font-size: 1rem;
-  color: #000000;
-}
 
 .navbar .form-control {
   padding: 0.75rem 1rem;
@@ -214,15 +210,19 @@ h6:hover {
   border-radius: 0;
 }
 
-.form-control-dark {
-  color: #fff;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.1);
+.navbar-brand {
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+  font-size: 1rem;
+  background-color: #dbe2ef;
+  color: #000000;
+  box-shadow: inset -1px 0 0 rgba(0, 0, 0, 0.25);
 }
 
-.form-control-dark:focus {
-  border-color: transparent;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+.navbar .navbar-toggler {
+  top: 0.25rem;
+  right: 1rem;
+  color: #000000;
 }
 
 /* @media (max-width: 600px) {
