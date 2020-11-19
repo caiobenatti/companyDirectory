@@ -252,7 +252,7 @@ function saveProfile() {
       last: JSON.stringify($("#lastName").val()),
       email: JSON.stringify($("#email").val()),
       jobTitle: JSON.stringify($("#jobtitle").val()),
-      depID: JSON.stringify($("#department").val()),
+      // depID: JSON.stringify($("#department").val()),
       id: JSON.parse($("#id").val()),
     },
     success: function (result) {
