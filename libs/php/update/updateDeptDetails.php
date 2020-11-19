@@ -30,7 +30,7 @@
 
 	}	
 
-	$query = 'UPDATE department SET name = ' . $_REQUEST['name'] . ', locationID= ' . $_REQUEST['locationID'] . ' WHERE id = ' . $_REQUEST['id'];
+	$query = 'UPDATE department SET name = ' . $_REQUEST['deptName'] . ', locationID= ' . $_REQUEST['deptLocation'] . ' WHERE id = ' . $_REQUEST['id'];
 
 	$result = $conn->query($query);
 	

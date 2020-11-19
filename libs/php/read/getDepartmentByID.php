@@ -11,7 +11,7 @@
 
 	$executionStartTime = microtime(true);
 
-	include("config.php");
+	include("../config.php");
 
 	$conn = new mysqli($cd_host, $cd_user, $cd_password, $cd_dbname, $cd_port, $cd_socket);
 
@@ -34,6 +34,8 @@
 	// $_REQUEST used for development / debugging. Remember to cange to $_POST for production
 
 	$query = 'SELECT id, name, locationID FROM department WHERE id = ' . $_REQUEST['id'];
+
+// $query = 'SELECT department.id, department.name, location.name as location  FROM department JOIN location ON department.locationID = location.id WHERE department.id = ' . $_REQUEST['id'];
 
 	$result = $conn->query($query);
 	

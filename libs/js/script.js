@@ -6,29 +6,18 @@ let charP = [];
 let label;
 let myChart = null;
 
-// Loading of datatables
-// $(document).ready(function () {
-//   $("#selectedColumn").DataTable({
-//     paging: false,
-//     aaSorting: [],
-//     bFilter: false,
-//     columnDefs: [
-//       {
-//         orderable: false,
-//         targets: 7,
-//       },
-//     ],
-//   });
-//   $(".dataTables_length").addClass("bs-select");
-// });
-
 // Event listener
-$(document).on("click", "#buttonMore", function (e) {
+$(document).on("click", "#buttonEmp", function (e) {
   getEmpDet(
     JSON.stringify(this.value.split(" ")[1]),
     JSON.stringify(this.value.split(" ")[0])
   );
   $("#empModal").modal("show");
+});
+
+$(document).on("click", "#buttonDept", function (e) {
+  getDeptDet(JSON.stringify(this.value));
+  $("#deptModal").modal("show");
 });
 
 $("#graphDep").click(function () {
@@ -44,9 +33,22 @@ $("#editProfile").click(function () {
   $("input[name='Edit']").removeAttr("readonly");
 });
 
+$("#editProfileDept").click(function () {
+  $("input[name='Edit']").removeAttr("readonly");
+});
+
+$("#saveProfileDept").click(function () {
+  $("input[name='Edit']").attr("readonly", "readonly");
+  saveDept();
+});
+
 $("#saveProfile").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
   saveProfile();
+});
+
+$("#closeEmp").click(function () {
+  getAll();
 });
 
 $("#searchText").keyup(function () {
@@ -60,28 +62,12 @@ $("#navbarDashboard").click(function () {
   $("#topMain").show();
 });
 
-$("#navbarLeftDashboard").click(function () {
-  graphLocation();
-  getAll();
-  $("#topMain").show();
-});
-
 $("#navbarEmployees").click(function () {
   graphLocation();
   getAll();
 });
 
-$("#navbarLeftEmployees").click(function () {
-  graphLocation();
-  getAll();
-});
-
 $("#navbarDepartments").click(function () {
-  graphDepartment();
-  getDepartments();
-});
-
-$("#navbarLeftDepartments").click(function () {
   graphDepartment();
   getDepartments();
 });
@@ -124,7 +110,7 @@ function getAll() {
          <td class="mobileHidden">${result.data[i].location}</td>
         <td class="mobileHidden">${result.data[i].jobTitle}</td>
         <td>
-        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonMore" value="${
+        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonEmp" value="${
           result.data[i].lastName
         } ${result.data[i].firstName}">
          More
@@ -149,7 +135,8 @@ function getDepartments() {
         $("#headerMain").html("Departments");
         $("#trHeader").append(`
         <th class="th-sm" scope="col">#</th>
-              <th class="th-sm" scope="col">Department Name</th>
+        <th class="th-sm" scope="col">Department ID</th>      
+        <th class="th-sm" scope="col">Department Name</th>
               <th class="th-sm" scope="col">Location</th>
 
               <th scope="col">Actions</th>`);
@@ -160,11 +147,12 @@ function getDepartments() {
           $("#mainList").append(`
                 <tr>
                 <th scope="row">${i + 1}</th>
+                <td>${result.data[i].id}</td>
                 <td>${result.data[i].name}</td>
                 <td>${result.data[i].location}</td>
                 
                 <td>
-        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonMore" value="${
+        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonDept" value="${
           result.data[i].id
         }">
          More
@@ -204,7 +192,28 @@ function getEmpDet(firstName, lastName) {
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      // console.log("employee failure");
+      console.log(`Database error: ${textStatus}`);
+    },
+  });
+}
+
+function getDeptDet(id) {
+  $.ajax({
+    url: "libs/php/read/getDepartmentByID.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      id: id,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        console.log(result);
+        $("#deptId").val(`${result.data[0].id}`);
+        $("#deptLocation").val(`${result.data[0].location}`);
+        $("#deptName").val(`${result.data[0].name}`);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
       console.log(`Database error: ${textStatus}`);
     },
   });
@@ -230,7 +239,7 @@ function searchBar(txt) {
          <td class="mobileHidden">${result.data[i].location}</td>
         <td class="mobileHidden">${result.data[i].jobTitle}</td>
         <td>
-        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonMore" value="${
+        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonEmp" value="${
           result.data[i].lastName
         } ${result.data[i].firstName}">
          More
@@ -264,7 +273,35 @@ function saveProfile() {
         //   JSON.stringify(capitalize($("#input-first-edit").val())),
         //   JSON.stringify(capitalize($("#input-last-edit").val()))
         // );
-        // $("#empModal").modal({ refresh: true });
+        $("#empModal").modal({ refresh: true });
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(`Database error: ${jqXHR} ${textStatus} ${errorThrown}`);
+    },
+  });
+}
+
+function saveDept() {
+  $.ajax({
+    url: "libs/php/update/updateDeptDetails.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      deptName: JSON.stringify($("#deptName").val()),
+      deptLocation: JSON.stringify($("#deptLocation").val()),
+      id: JSON.parse($("#deptID").val()),
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        console.log(result);
+        console.log("Success");
+        // displayAllEmployees();
+        // getEmployeeDetails(
+        //   JSON.stringify(capitalize($("#input-first-edit").val())),
+        //   JSON.stringify(capitalize($("#input-last-edit").val()))
+        // );
+        $("#empModal").modal({ refresh: true });
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
