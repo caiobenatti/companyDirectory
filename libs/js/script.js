@@ -290,17 +290,12 @@ function saveDept() {
     data: {
       deptName: JSON.stringify($("#deptName").val()),
       deptLocation: JSON.stringify($("#deptLocation").val()),
-      id: JSON.parse($("#deptID").val()),
+      id: JSON.parse($("#deptId").html()),
     },
     success: function (result) {
       if (result.status.code == 200) {
         console.log(result);
         console.log("Success");
-        // displayAllEmployees();
-        // getEmployeeDetails(
-        //   JSON.stringify(capitalize($("#input-first-edit").val())),
-        //   JSON.stringify(capitalize($("#input-last-edit").val()))
-        // );
         $("#empModal").modal({ refresh: true });
       }
     },
