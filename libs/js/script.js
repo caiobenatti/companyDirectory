@@ -78,9 +78,8 @@ $("#navbarLocations").click(function () {
   graphLocation();
 });
 
-getEmpByLoc();
-$("#toggleLocation").change(function () {
-  getCountry($("#toggleLocation").val());
+$("#toggleLocation a").click(function () {
+  getEmpByLoc('$("#toggleLocation").val()');
 });
 
 // Functions for populating data
@@ -179,7 +178,7 @@ function getToggleDep() {
       if (result.status.code == 200) {
         for (let i = 0; i < Object.keys(result.data).length; i++) {
           $("#toggleDepartment").append(`
-                  <a class="dropdown-item" href="#" value="${result.data[i].id}">${result.data[i].name}</a>`);
+                  <a class="dropdown-item" href="#" value="${result.data[i].id}" onClick="getEmpByDept(${result.data[i].id});">${result.data[i].name}</a>`);
         }
       }
     },
@@ -195,7 +194,7 @@ function getToggleLocs() {
       if (result.status.code == 200) {
         for (let i = 0; i < Object.keys(result.data).length; i++) {
           $("#toggleLocation").append(`
-                  <a class="dropdown-item" href="#" value="${result.data[i].id}">${result.data[i].name}</a>`);
+                  <a class="dropdown-item" href="#" value="${result.data[i].id}" onClick="getEmpByLoc(${result.data[i].id});">${result.data[i].name}</a>`);
         }
       }
     },
@@ -266,9 +265,86 @@ function getEmpByLoc(id) {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        dataDump = result;
+        $("#trHeader").html("");
+        $("#mainList").html("");
+        $("#headerMain").html("Employees");
+        $("#trHeader").append(`
+        <th class="th-sm" scope="col">#</th>
+              <th class="th-sm" scope="col">First name</th>
+              <th class="th-sm" scope="col">Last name</th>
+              <th class="th-sm mobileHidden" scope="col">Email</th>
+              <th class="th-sm mobileHidden" scope="col">Department</th>
+              <th class="th-sm mobileHidden" scope="col">Location</th>
+              <th class="th-sm mobileHidden" scope="col">Job title</th>
+              <th scope="col">Actions</th>`);
+        for (let i = 0; i < Object.keys(result.data).length; i++) {
+          $("#mainList").append(`
+        <tr>
+        <th scope="row">${i + 1}</th>
+        <td>${result.data[i].firstName}</td>
+        <td>${result.data[i].lastName}</td>
+        <td class="mobileHidden">${result.data[i].email}</td>
+        <td class="mobileHidden">${result.data[i].department}</td>
+         <td class="mobileHidden">${result.data[i].location}</td>
+        <td class="mobileHidden">${result.data[i].jobTitle}</td>
+        <td>
+        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonEmp" value="${
+          result.data[i].lastName
+        } ${result.data[i].firstName}">
+         More
+        </button>
+          </td>
+</tr>`);
+        }
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(`Database error:  ${textStatus} ${errorThrown}`);
+    },
+  });
+}
 
-        console.log(result);
+function getEmpByDept(id) {
+  $.ajax({
+    url: "libs/php/read/getEmpByDept.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      id: id,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        $("#trHeader").html("");
+        $("#mainList").html("");
+        $("#headerMain").html("Employees");
+        $("#trHeader").append(`
+        <th class="th-sm" scope="col">#</th>
+              <th class="th-sm" scope="col">First name</th>
+              <th class="th-sm" scope="col">Last name</th>
+              <th class="th-sm mobileHidden" scope="col">Email</th>
+              <th class="th-sm mobileHidden" scope="col">Department</th>
+              <th class="th-sm mobileHidden" scope="col">Location</th>
+              <th class="th-sm mobileHidden" scope="col">Job title</th>
+              <th scope="col">Actions</th>`);
+        for (let i = 0; i < Object.keys(result.data).length; i++) {
+          $("#mainList").append(`
+        <tr>
+        <th scope="row">${i + 1}</th>
+        <td>${result.data[i].firstName}</td>
+        <td>${result.data[i].lastName}</td>
+        <td class="mobileHidden">${result.data[i].email}</td>
+        <td class="mobileHidden">${result.data[i].department}</td>
+         <td class="mobileHidden">${result.data[i].location}</td>
+        <td class="mobileHidden">${result.data[i].jobTitle}</td>
+        <td>
+        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonEmp" value="${
+          result.data[i].lastName
+        } ${result.data[i].firstName}">
+         More
+        </button>
+          </td>
+</tr>`);
+        }
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
