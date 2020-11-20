@@ -20,14 +20,14 @@ $(document).on("click", "#buttonDept", function (e) {
   $("#deptModal").modal("show");
 });
 
-$("#graphDep").click(function () {
-  graphDepartment();
-  getDepartments();
-});
+// $("#graphDep").click(function () {
+//   graphDepartment();
+//   getDepartments();
+// });
 
-$("#graphLoc").click(function () {
-  graphLocation();
-});
+// $("#graphLoc").click(function () {
+//   graphLocation();
+// });
 
 $("#editProfile").click(function () {
   $("input[name='Edit']").removeAttr("readonly");
@@ -59,21 +59,28 @@ $("#searchText").keyup(function () {
 $("#navbarDashboard").click(function () {
   graphLocation();
   getAll();
-  $("#topMain").show();
+  $("#buttonToggle").show();
 });
 
 $("#navbarEmployees").click(function () {
   graphLocation();
   getAll();
+  $("#buttonToggle").show();
 });
 
 $("#navbarDepartments").click(function () {
   graphDepartment();
   getDepartments();
+  $("#buttonToggle").hide();
 });
 
 $("#navbarLocations").click(function () {
   graphLocation();
+});
+
+getEmpByLoc();
+$("#toggleLocation").change(function () {
+  getCountry($("#toggleLocation").val());
 });
 
 // Functions for populating data
@@ -85,7 +92,6 @@ function getAll() {
     dataType: "json",
     success: function (result) {
       if (result.status.code == 200) {
-        employees = result;
         graphDepartment();
         $("#trHeader").html("");
         $("#mainList").html("");
@@ -130,7 +136,6 @@ function getDepartments() {
     dataType: "json",
     success: function (result) {
       if (result.status.code == 200) {
-        employees = result;
         $("#trHeader").html("");
         $("#headerMain").html("Departments");
         $("#trHeader").append(`
@@ -159,6 +164,38 @@ function getDepartments() {
         </button>
           </td>
         </tr>`);
+        }
+      }
+    },
+  });
+}
+
+function getToggleDep() {
+  $.ajax({
+    url: "libs/php/read/getAllDepartments.php",
+    type: "GET",
+    dataType: "json",
+    success: function (result) {
+      if (result.status.code == 200) {
+        for (let i = 0; i < Object.keys(result.data).length; i++) {
+          $("#toggleDepartment").append(`
+                  <a class="dropdown-item" href="#" value="${result.data[i].id}">${result.data[i].name}</a>`);
+        }
+      }
+    },
+  });
+}
+
+function getToggleLocs() {
+  $.ajax({
+    url: "libs/php/read/getAllLocations.php",
+    type: "GET",
+    dataType: "json",
+    success: function (result) {
+      if (result.status.code == 200) {
+        for (let i = 0; i < Object.keys(result.data).length; i++) {
+          $("#toggleLocation").append(`
+                  <a class="dropdown-item" href="#" value="${result.data[i].id}">${result.data[i].name}</a>`);
         }
       }
     },
@@ -214,7 +251,28 @@ function getDeptDet(id) {
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      console.log(`Database error: ${textStatus}`);
+      console.log(`Database error: ${jqXHR} ${textStatus} ${errorThrown}`);
+    },
+  });
+}
+
+function getEmpByLoc(id) {
+  $.ajax({
+    url: "libs/php/read/getEmpByLoc.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      id: id,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        dataDump = result;
+
+        console.log(result);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(`Database error:  ${textStatus} ${errorThrown}`);
     },
   });
 }
@@ -390,6 +448,8 @@ function graphLocation() {
 }
 
 getAll();
+getToggleDep();
+getToggleLocs();
 
 // $('mainContent').hide();
 // $("#login").fadeOut();

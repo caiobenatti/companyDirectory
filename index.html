@@ -128,96 +128,28 @@
           <div class="sidebar-sticky pt-3">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="#">
+                <a class="nav-link active" href="#" id="navbarDashboard">
                   <span data-feather="home"></span>
                   Dashboard <span class="sr-only">(current)</span>
                 </a>
               </li>
-              <li class="nav-item dropdown active">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  ><span data-feather="users"></span>
+              <li class="nav-item">
+                <a class="nav-link" href="#" id="navbarEmployees">
+                  <span data-feather="file"></span>
                   Employees
                 </a>
-                <div
-                  class="dropdown-menu"
-                  aria-labelledby="navbarDropdownMenuLink"
-                >
-                  <a class="dropdown-item" href="#" id="navbarEmployees"
-                    >Show all</a
-                  >
-                  <a class="dropdown-item" href="#">Filter by Department</a>
-                  <a class="dropdown-item" href="#">Filter by Location</a>
-                </div>
               </li>
+
               <li class="nav-item">
                 <a class="nav-link" href="#" id="navbarDepartments">
                   <span data-feather="file"></span>
                   Departments
                 </a>
               </li>
-
-              <li class="nav-item dropdown active">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  data-toggle="dropdown"
-                  aria-haspopup="true"
-                  aria-expanded="false"
-                  ><span data-feather="bar-chart-2"></span>
+              <li class="nav-item">
+                <a class="nav-link" href="#" id="navbarLocation">
+                  <span data-feather="file"></span>
                   Locations
-                </a>
-                <div
-                  class="dropdown-menu"
-                  aria-labelledby="navbarDropdownMenuLink"
-                >
-                  <a class="dropdown-item" href="#">Filter by Department</a>
-                  <a class="dropdown-item" href="#" id="navbarLocations"
-                    >Filter by Location</a
-                  >
-                </div>
-              </li>
-            </ul>
-
-            <h6
-              class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted"
-            >
-              <span>Saved reports</span>
-              <a
-                class="d-flex align-items-center text-muted"
-                href="#"
-                aria-label="Add a new report"
-              >
-                <span data-feather="plus-circle"></span>
-              </a>
-            </h6>
-            <ul class="nav flex-column mb-2">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Current month
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Last quarter
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Social engagement
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span data-feather="file-text"></span>
-                  Year-end sale
                 </a>
               </li>
             </ul>
@@ -242,22 +174,34 @@
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
           >
             <h2 id="headerMain"></h2>
-            <div class="btn-toolbar mb-2 mb-md-0">
-              <div class="btn-group mr-2">
-                <button type="button" class="btn btn-sm btn-outline-secondary">
-                  Share
+            <div class="btn-toolbar mb-2 mb-md-0" id="buttonToggle">
+              <h4>Filter by:</h4>
+              <div class="btn-group ml-3">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span data-feather="calendar"></span>
+                  Location
                 </button>
-                <button type="button" class="btn btn-sm btn-outline-secondary">
-                  Export
-                </button>
+                <div class="dropdown-menu" id="toggleLocation"></div>
               </div>
-              <button
-                type="button"
-                class="btn btn-sm btn-outline-secondary dropdown-toggle"
-              >
-                <span data-feather="calendar"></span>
-                This week
-              </button>
+              <div class="btn-group">
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-secondary dropdown-toggle"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                >
+                  <span data-feather="calendar"></span>
+                  Department
+                </button>
+                <div class="dropdown-menu" id="toggleDepartment"></div>
+              </div>
             </div>
           </div>
           <div class="table-responsive" id="selectedColumn">
