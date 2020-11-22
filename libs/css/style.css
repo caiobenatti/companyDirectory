@@ -225,6 +225,10 @@ h6:hover {
   color: #000000;
 }
 
+#signOut {
+  background-color: #dbe2ef;
+}
+
 /* @media (max-width: 600px) {
   .mobileHidden {
     display: none;

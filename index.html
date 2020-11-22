@@ -112,7 +112,7 @@
         aria-label="Search"
         id="searchText"
       />
-      <ul class="navbar-nav px-3">
+      <ul class="navbar-nav px-3" id="signOut">
         <li class="nav-item text-nowrap">
           <a class="nav-link" href="#">Sign out</a>
         </li>
@@ -135,20 +135,28 @@
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#" id="navbarEmployees">
-                  <span data-feather="file"></span>
+                  <span data-feather="user"></span>
                   Employees
+                  <!-- <span
+                    ><a
+                      class="d-flex align-items-center text-muted"
+                      href="#"
+                      aria-label="Add a new report"
+                    >
+                      <span data-feather="plus-circle"></span> </a
+                  ></span> -->
                 </a>
               </li>
 
               <li class="nav-item">
                 <a class="nav-link" href="#" id="navbarDepartments">
-                  <span data-feather="file"></span>
+                  <span data-feather="folder"></span>
                   Departments
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" id="navbarLocation">
-                  <span data-feather="file"></span>
+                <a class="nav-link" href="#" id="navbarLocations">
+                  <span data-feather="map"></span>
                   Locations
                 </a>
               </li>
@@ -162,18 +170,25 @@
           >
             <h2>Dashboard</h2>
           </div>
-
-          <canvas
-            class="my-4 w-100"
-            id="myChart"
-            width="900"
-            height="380"
-          ></canvas>
-
+          <details>
+            <summary id="showGraph">Graph</summary>
+            <canvas
+              class="my-4 w-100"
+              id="myChart"
+              width="900"
+              height="380"
+            ></canvas>
+          </details>
           <div
             class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
           >
             <h2 id="headerMain"></h2>
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-secondary ml-3 mr-auto"
+            >
+              Add <span data-feather="map"></span>
+            </button>
             <div class="btn-toolbar mb-2 mb-md-0" id="buttonToggle">
               <h4>Filter by:</h4>
               <div class="btn-group ml-3">
@@ -184,7 +199,7 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <span data-feather="calendar"></span>
+                  <span data-feather="map"></span>
                   Location
                 </button>
                 <div class="dropdown-menu" id="toggleLocation"></div>
@@ -197,7 +212,7 @@
                   aria-haspopup="true"
                   aria-expanded="false"
                 >
-                  <span data-feather="calendar"></span>
+                  <span data-feather="folder"></span>
                   Department
                 </button>
                 <div class="dropdown-menu" id="toggleDepartment"></div>
@@ -466,7 +481,7 @@
                   >
                     Save Profile</button
                   ><button
-                    class="btn btn-danger profile-button mt-5"
+                    class="btn btn-danger profile-button"
                     type="button"
                     id="deleteProfile"
                   >

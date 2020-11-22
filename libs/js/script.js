@@ -20,15 +20,6 @@ $(document).on("click", "#buttonDept", function (e) {
   $("#deptModal").modal("show");
 });
 
-// $("#graphDep").click(function () {
-//   graphDepartment();
-//   getDepartments();
-// });
-
-// $("#graphLoc").click(function () {
-//   graphLocation();
-// });
-
 $("#editProfile").click(function () {
   $("input[name='Edit']").removeAttr("readonly");
 });
@@ -75,11 +66,7 @@ $("#navbarDepartments").click(function () {
 });
 
 $("#navbarLocations").click(function () {
-  graphLocation();
-});
-
-$("#toggleLocation a").click(function () {
-  getEmpByLoc('$("#toggleLocation").val()');
+  getAllLocations();
 });
 
 // Functions for populating data
@@ -163,6 +150,44 @@ function getDepartments() {
         </button>
           </td>
         </tr>`);
+        }
+      }
+    },
+  });
+}
+
+function getAllLocations() {
+  $.ajax({
+    url: "libs/php/read/getAllLocations.php",
+    type: "GET",
+    dataType: "json",
+    success: function (result) {
+      if (result.status.code == 200) {
+        $("#trHeader").html("");
+        $("#headerMain").html("Departments");
+        $("#trHeader").append(`
+        <th class="th-sm" scope="col">#</th>
+        <th class="th-sm" scope="col">Location ID</th>      
+        <th class="th-sm" scope="col">Location Name</th>
+        <th scope="col">Actions</th>`);
+        graphLocation();
+        dataDump = result;
+        $("#mainList").html("");
+        for (let i = 0; i < Object.keys(result.data).length; i++) {
+          $("#mainList").append(`
+                <tr>
+                <th scope="row">${i + 1}</th>
+                <td>${result.data[i].id}</td>
+                <td>${result.data[i].name}</td>
+                 <td>
+        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonDept" value="${
+          result.data[i].id
+        }">
+         More
+        </button>
+          </td>
+        </tr>
+        `);
         }
       }
     },
@@ -400,14 +425,7 @@ function saveProfile() {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
         console.log("Success");
-        // displayAllEmployees();
-        // getEmployeeDetails(
-        //   JSON.stringify(capitalize($("#input-first-edit").val())),
-        //   JSON.stringify(capitalize($("#input-last-edit").val()))
-        // );
-        $("#empModal").modal({ refresh: true });
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -430,7 +448,6 @@ function saveDept() {
       if (result.status.code == 200) {
         console.log(result);
         console.log("Success");
-        $("#empModal").modal({ refresh: true });
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -495,17 +512,6 @@ function graphDepartment() {
 }
 
 function graphLocation() {
-  //   const keyed = employees.data.map((o) => [JSON.stringify([o.location]), o]);
-  //   const map = new Map(
-  //     keyed.map(([key, { location }]) => [key, { location, count: 0 }])
-  //   );
-  //   keyed.forEach(([key, o]) => map.get(key).count++);
-  //   chartP = Array.from(map.values());
-  //   xs = [];
-  //   ys = [];
-  //   chartP.forEach((element) => xs.push(element.location));
-  //   chartP.forEach((element) => ys.push(element.count));
-  //   label = "Employees per Location";
   $.ajax({
     url: "libs/php/read/getLocGraph.php",
     type: "GET",
