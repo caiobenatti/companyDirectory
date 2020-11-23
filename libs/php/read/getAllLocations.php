@@ -29,7 +29,7 @@
 
 	}	
 
-	$query = 'SELECT location.id, location.name FROM location';
+	$query = 'SELECT l.id, l.name AS name, (SELECT count(distinct d.id) FROM department d WHERE d.locationID = l.id) AS departments, (SELECT count(distinct p.id) FROM personnel p WHERE p.departmentID IN (SELECT d.id from department d WHERE d.locationID = l.id)) AS employees FROM location l ORDER BY l.name';
 
 	$result = $conn->query($query);
 	

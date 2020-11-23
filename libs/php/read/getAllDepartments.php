@@ -29,7 +29,7 @@
 
 	}	
 
-	$query = 'SELECT department.id, department.name, location.name as location FROM department JOIN location ON department.locationID=location.id';
+	$query = 'SELECT department.id, department.name, location.name as location, (SELECT count(p.id) FROM personnel p WHERE p.departmentID = department.id) AS employees FROM department JOIN location ON department.locationID=location.id';
 
 	$result = $conn->query($query);
 	

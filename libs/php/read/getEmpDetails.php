@@ -30,7 +30,7 @@
 
 	}	
 
-	$query = 'SELECT p.id, p.firstName, p.lastName, p.email, p.jobTitle, d.name AS department, l.name AS location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE p.lastName = ' . $_REQUEST['lastName'] . ' AND p.firstName = ' . $_REQUEST['firstName'];
+	$query = 'SELECT p.id, p.firstName, p.lastName, p.email, p.jobTitle, d.name AS department, d.id as deptId, l.name AS location FROM personnel p LEFT JOIN department d ON (d.id = p.departmentID) LEFT JOIN location l ON (l.id = d.locationID) WHERE p.lastName = ' . $_REQUEST['lastName'] . ' AND p.firstName = ' . $_REQUEST['firstName'];
 
 	$result = $conn->query($query);
 	
