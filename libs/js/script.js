@@ -29,7 +29,9 @@ $(document).on("click", "#buttonAdd", function (e) {
   if ($(this).val() == "employee") {
     alert("Employee");
   } else if ($(this).val() == "departments") {
-    alert("Department");
+    $(".location").empty();
+    getEmpLocation();
+    $("#addDeptModal").modal("show");
   } else {
     alert("Location");
   }
@@ -38,14 +40,13 @@ $(document).on("click", "#buttonAdd", function (e) {
 $(".editProfile").click(function () {
   $("input[name='Edit']").removeAttr("readonly");
   $("#department").prop("disabled", false);
-  $("#location").prop("disabled", false);
-  $("#deptLocation").prop("disabled", false);
+  $(".location").prop("disabled", false);
 });
 
 $("#saveProfileDept").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
   saveDept();
-  deptModal();
+  getDepartments();
   $("#empModal").modal("hide");
 });
 
@@ -66,6 +67,16 @@ $("#saveProfile").click(function () {
 $(".close").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
 });
+
+$("#saveAddDept").click(function () {
+  addDept();
+  getDepartments();
+  $("#addDeptModal").modal("hide");
+});
+
+// $(".cancel").click(function () {
+//   $("input[name='Edit']").attr("readonly", "readonly");
+// });
 
 $("#searchText").keyup(function () {
   let txt = $(this).val();
@@ -118,6 +129,7 @@ function getDepartments() {
     dataType: "json",
     success: function (result) {
       if (result.status.code == 200) {
+        console.log(result);
         $("#trHeader").html("");
         $("#headerMain").html("Departments");
         $("#buttonAdd").val("departments");
@@ -243,7 +255,7 @@ function getEmpDet(firstName, lastName) {
       if (result.status.code == 200) {
         console.log(result);
         $("#department").empty();
-        $("#location").empty();
+        $(".location").empty();
         $("#fullName").html(
           `${result.data[0].firstName} ${result.data[0].lastName}`
         );
@@ -256,7 +268,7 @@ function getEmpDet(firstName, lastName) {
         $("#department").append(
           `<option value="${result.data[0].deptId}">${result.data[0].department}</option>`
         );
-        $("#location").append(
+        $(".location").append(
           `<option value="${result.data[0].locId}">${result.data[0].location}</option>`
         );
         $("#jobtitle").val(result.data[0].jobTitle);
@@ -301,15 +313,15 @@ function getDeptDet(id) {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        $("#deptLocation").empty();
+        $(".location").empty();
         console.log(result);
         $("#deptId").val(`${result.data[0].id}`);
-        $("#deptLocation").append(
+        $(".location").append(
           `<option value="${result.data[0].id}">${result.data[0].location}</option>`
         );
         $("#deptName").val(`${result.data[0].name}`);
       }
-      getDeptLocation();
+      getLocation();
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(`Database error: ${jqXHR} ${textStatus} ${errorThrown}`);
@@ -418,37 +430,8 @@ function getEmpDept() {
     },
   });
 }
-function getEmpLocation() {
-  $.ajax({
-    url: "libs/php/read/getAllLocations.php",
-    type: "GET",
-    dataType: "json",
-    success: function (result) {
-      console.log(result);
-      if (result.status.code == 200) {
-        console.log(result);
-        for (let i = 0; i < Object.keys(result.data).length; i++) {
-          $("#location").append(
-            "<option value=" +
-              result.data[i].id +
-              ">" +
-              result.data[i].name +
-              "</option>"
-          );
-          if (result["data"][i]["name"] == $("#location").val()) {
-            $("#location").val(result.data[i].id);
-          }
-        }
-        $("#location").prop("disabled", true);
-      }
-    },
-    error: function (jqXHR, textStatus, errorThrown) {
-      alert(`Database error: ${textStatus}`);
-    },
-  });
-}
 
-function getDeptLocation() {
+function getLocation() {
   $.ajax({
     url: "libs/php/read/getAllLocations.php",
     type: "GET",
@@ -456,20 +439,19 @@ function getDeptLocation() {
     success: function (result) {
       console.log(result);
       if (result.status.code == 200) {
-        console.log(result);
         for (let i = 0; i < Object.keys(result.data).length; i++) {
-          $("#deptLocation").append(
+          $(".location").append(
             "<option value=" +
               result.data[i].id +
               ">" +
               result.data[i].name +
               "</option>"
           );
-          if (result["data"][i]["name"] == $("#deptLocation").val()) {
-            $("#deptLocation").val(result.data[i].id);
+          if (result["data"][i]["name"] == $(".location").val()) {
+            $(".location").val(result.data[i].id);
           }
         }
-        $("#deptLocation").prop("disabled", true);
+        // $("#location").prop("disabled", true);
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -565,6 +547,28 @@ function saveLoc() {
     data: {
       locName: JSON.stringify($("#locName").val()),
       id: JSON.parse($("#locId").val()),
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        console.log(result);
+        console.log("Success");
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(`Database error: ${jqXHR} ${textStatus} ${errorThrown}`);
+    },
+  });
+}
+
+//Functions to add new Employee record, Department and Location
+function addDept() {
+  $.ajax({
+    url: "libs/php/create/insertDepartment.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      name: JSON.stringify($("#addDeptName").val()),
+      locationID: JSON.stringify($("#addDeptLocation").val()),
     },
     success: function (result) {
       if (result.status.code == 200) {

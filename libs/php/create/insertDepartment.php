@@ -10,7 +10,7 @@
 
 	$executionStartTime = microtime(true);
 
-	include("config.php");
+	include("../config.php");
 
 	header('Content-Type: application/json; charset=UTF-8');
 
@@ -35,6 +35,8 @@
 	// $_REQUEST used for development / debugging. Remember to cange to $_POST for production
 
 	$query = 'INSERT INTO department (name, locationID) VALUES("' . $_REQUEST['name'] . '",' . $_REQUEST["locationID"] . ')';
+
+	// $query = 'INSERT INTO department (name, locationID) VALUES("Test",1)';
 
 	$result = $conn->query($query);
 	

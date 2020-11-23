@@ -343,10 +343,9 @@
                       <span class="smallText">Location</span
                       ><select
                         type="text"
-                        class="form-control"
+                        class="form-control location"
                         value=""
                         placeholder="Location"
-                        id="location"
                         name="Edit"
                         readonly
                       ></select>
@@ -442,7 +441,7 @@
                     <span class="smallText">Location</span
                     ><select
                       type="text"
-                      class="form-control"
+                      class="form-control location"
                       placeholder="Location"
                       id="deptLocation"
                       value=""
@@ -496,14 +495,14 @@
     <!-- MODAL Add Department-->
 
     <div
-      class="modal fade bd-example-modal-lg"
+      class="modal fade bd-example-modal-sm"
       tabindex="-1"
       role="dialog"
       aria-labelledby="modalAddDepartment"
       aria-hidden="true"
       id="addDeptModal"
     >
-      <div class="modal-dialog modal-lg d-flex justify-content">
+      <div class="modal-dialog modal-sm d-flex justify-content">
         <div class="modal-content">
           <button
             type="button"
@@ -523,30 +522,14 @@
                     <i class="fa fa-long-arrow-left mr-1 mb-1"></i>
                   </div>
                 </div>
-                <div class="row mt-2">
-                  <div class="col-md-12">
-                    <span class="smallText">Department ID</span
-                    ><input
-                      type="text"
-                      class="form-control"
-                      id="deptId"
-                      placeholder="Department ID"
-                      value=""
-                      readonly
-                    />
-                  </div>
-                </div>
                 <div class="row mt-3">
                   <div class="col-md-12">
                     <span class="smallText">Location</span
                     ><select
                       type="text"
-                      class="form-control"
+                      class="form-control location"
                       placeholder="Location"
-                      id="deptLocation"
                       value=""
-                      name="Edit"
-                      readonly
                     ></select>
                   </div>
                 </div>
@@ -557,32 +540,23 @@
                       type="text"
                       class="form-control"
                       value=""
-                      readonly
-                      name="Edit"
-                      id="deptName"
+                      id="addDeptName"
                       placeholder="Department Name"
-                      readonly
                     />
                   </div>
                 </div>
                 <div class="mt-5 text-right">
                   <button
-                    class="btn btn-primary profile-button editProfile"
-                    type="button"
-                  >
-                    Edit Profile</button
-                  ><button
                     class="btn btn-primary profile-button"
                     type="submit"
-                    id="saveProfileDept"
+                    id="saveAddDept"
                   >
                     Save Profile</button
                   ><button
-                    class="btn btn-danger profile-button"
+                    class="btn btn-danger profile-button cancel"
                     type="button"
-                    id="deleteProfile"
                   >
-                    Delete Profile
+                    Cancel
                   </button>
                 </div>
               </div>
