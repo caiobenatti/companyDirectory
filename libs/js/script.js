@@ -20,6 +20,21 @@ $(document).on("click", "#buttonDept", function (e) {
   $("#deptModal").modal("show");
 });
 
+$(document).on("click", "#buttonLoc", function (e) {
+  getLocDet(JSON.stringify(this.value));
+  $("#locModal").modal("show");
+});
+
+$(document).on("click", "#buttonAdd", function (e) {
+  if ($(this).val() == "employee") {
+    alert("Employee");
+  } else if ($(this).val() == "departments") {
+    alert("Department");
+  } else {
+    alert("Location");
+  }
+});
+
 $(".editProfile").click(function () {
   $("input[name='Edit']").removeAttr("readonly");
   $("#department").prop("disabled", false);
@@ -30,16 +45,25 @@ $(".editProfile").click(function () {
 $("#saveProfileDept").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
   saveDept();
-  getDepartments();
+  deptModal();
+  $("#empModal").modal("hide");
+});
+
+$("#saveProfileLoc").click(function () {
+  $("input[name='Edit']").attr("readonly", "readonly");
+  saveLoc();
+  getAllLocations();
+  $("#locModal").modal("hide");
 });
 
 $("#saveProfile").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
   saveProfile();
+  getAll();
+  $("#empModal").modal("hide");
 });
 
-$("#closeEmp").click(function () {
-  getAll();
+$(".close").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
 });
 
@@ -81,7 +105,7 @@ function getAll() {
       if (result.status.code == 200) {
         console.log(result);
         graphDepartment();
-        populateEmp(result);
+        showEmp(result);
       }
     },
   });
@@ -96,12 +120,13 @@ function getDepartments() {
       if (result.status.code == 200) {
         $("#trHeader").html("");
         $("#headerMain").html("Departments");
+        $("#buttonAdd").val("departments");
         $("#trHeader").append(`
         <th class="th-sm" scope="col">#</th>
         <th class="th-sm" scope="col">Department ID</th>      
         <th class="th-sm" scope="col">Department Name</th>
-        <th class="th-sm" scope="col">Location</th>
-        <th class="th-sm" scope="col">Employees</th>
+        <th class="th-sm mobileHidden" scope="col">Location</th>
+        <th class="th-sm mobileHidden" scope="col">Employees</th>
 
               <th scope="col">Actions</th>`);
         graphDepartment();
@@ -113,8 +138,8 @@ function getDepartments() {
                 <th scope="row">${i + 1}</th>
                 <td>${result.data[i].id}</td>
                 <td>${result.data[i].name}</td>
-                <td>${result.data[i].location}</td>
-                <td>${result.data[i].employees}</td>
+                <td class="mobileHidden">${result.data[i].location}</td>
+                <td class="mobileHidden">${result.data[i].employees}</td>
                 
                 <td>
         <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonDept" value="${
@@ -139,12 +164,13 @@ function getAllLocations() {
       if (result.status.code == 200) {
         $("#trHeader").html("");
         $("#headerMain").html("Locations");
+        $("#buttonAdd").val("locations");
         $("#trHeader").append(`
         <th class="th-sm" scope="col">#</th>
         <th class="th-sm" scope="col">Location ID</th>      
         <th class="th-sm" scope="col">Location Name</th>
-        <th class="th-sm" scope="col">Departments</th>
-        <th class="th-sm" scope="col">Employees</th>
+        <th class="th-sm mobileHidden" scope="col">Departments</th>
+        <th class="th-sm mobileHidden" scope="col">Employees</th>
         <th scope="col">Actions</th>`);
         graphLocation();
         $("#mainList").html("");
@@ -154,10 +180,10 @@ function getAllLocations() {
                 <th scope="row">${i + 1}</th>
                 <td>${result.data[i].id}</td>
                 <td>${result.data[i].name}</td>
-                <td>${result.data[i].departments}</td>
-                <td>${result.data[i].employees}</td>
+                <td class="mobileHidden">${result.data[i].departments}</td>
+                <td class="mobileHidden">${result.data[i].employees}</td>
                  <td>
-        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonDept" value="${
+        <button type="button" class="btn btn-primary btn-sm m-0 waves-effect" id="buttonLoc" value="${
           result.data[i].id
         }">
          More
@@ -244,6 +270,27 @@ function getEmpDet(firstName, lastName) {
   });
 }
 
+function getLocDet(id) {
+  $.ajax({
+    url: "libs/php/read/getLocationDetails.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      id: id,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        console.log(result);
+        $("#locId").val(result.data[0].id);
+        $("#locName").val(result.data[0].name);
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(`Database error: ${textStatus}`);
+    },
+  });
+}
+
 function getDeptDet(id) {
   $.ajax({
     url: "libs/php/read/getDepartmentByID.php",
@@ -280,7 +327,7 @@ function getEmpByLoc(id) {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        populateEmp(result);
+        showEmp(result);
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -299,7 +346,7 @@ function getEmpByDept(id) {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        populateEmp(result);
+        showEmp(result);
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -308,10 +355,11 @@ function getEmpByDept(id) {
   });
 }
 
-function populateEmp(result) {
+function showEmp(result) {
   $("#trHeader").html("");
   $("#mainList").html("");
   $("#headerMain").html("Employees");
+  $("#buttonAdd").val("employee");
   $("#trHeader").append(`
         <th class="th-sm" scope="col">#</th>
         <th class="th-sm" scope="col">First name</th>
@@ -462,6 +510,7 @@ function searchBar(txt) {
   });
 }
 
+// Functions to update Database
 function saveProfile() {
   $.ajax({
     url: "libs/php/update/updateEmpDetails.php",
@@ -495,6 +544,27 @@ function saveDept() {
       deptName: JSON.stringify($("#deptName").val()),
       deptLocation: JSON.stringify($("#deptLocation").val()),
       id: JSON.parse($("#deptId").val()),
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        console.log(result);
+        console.log("Success");
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(`Database error: ${jqXHR} ${textStatus} ${errorThrown}`);
+    },
+  });
+}
+
+function saveLoc() {
+  $.ajax({
+    url: "libs/php/update/updateLocDetails.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      locName: JSON.stringify($("#locName").val()),
+      id: JSON.parse($("#locId").val()),
     },
     success: function (result) {
       if (result.status.code == 200) {

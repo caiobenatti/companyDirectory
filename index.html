@@ -186,6 +186,7 @@
             <button
               type="button"
               class="btn btn-sm btn-outline-secondary ml-3 mr-auto"
+              id="buttonAdd"
             >
               Add <span data-feather="plus-circle"></span>
             </button>
@@ -248,7 +249,6 @@
             class="close"
             data-dismiss="modal"
             aria-label="Close"
-            id="closeEmp"
           >
             <span aria-hidden="true">&times;</span>
           </button>
@@ -485,6 +485,189 @@
                   >
                     Delete Profile
                   </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL Add Department-->
+
+    <div
+      class="modal fade bd-example-modal-lg"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modalAddDepartment"
+      aria-hidden="true"
+      id="addDeptModal"
+    >
+      <div class="modal-dialog modal-lg d-flex justify-content">
+        <div class="modal-content">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="container rounded bg-white mt-5">
+            <div class="row d-flex justify-content-center">
+              <div class="p-3 py-5">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <div class="d-flex flex-row align-items-center back">
+                    <i class="fa fa-long-arrow-left mr-1 mb-1"></i>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-md-12">
+                    <span class="smallText">Department ID</span
+                    ><input
+                      type="text"
+                      class="form-control"
+                      id="deptId"
+                      placeholder="Department ID"
+                      value=""
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <span class="smallText">Location</span
+                    ><select
+                      type="text"
+                      class="form-control"
+                      placeholder="Location"
+                      id="deptLocation"
+                      value=""
+                      name="Edit"
+                      readonly
+                    ></select>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <span class="smallText">Department Name</span
+                    ><input
+                      type="text"
+                      class="form-control"
+                      value=""
+                      readonly
+                      name="Edit"
+                      id="deptName"
+                      placeholder="Department Name"
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="mt-5 text-right">
+                  <button
+                    class="btn btn-primary profile-button editProfile"
+                    type="button"
+                  >
+                    Edit Profile</button
+                  ><button
+                    class="btn btn-primary profile-button"
+                    type="submit"
+                    id="saveProfileDept"
+                  >
+                    Save Profile</button
+                  ><button
+                    class="btn btn-danger profile-button"
+                    type="button"
+                    id="deleteProfile"
+                  >
+                    Delete Profile
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL Locations -->
+
+    <div
+      class="modal fade bd-example-modal-lg"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myLargeModalLabel"
+      aria-hidden="true"
+      id="locModal"
+    >
+      <div class="modal-dialog modal-lg d-flex justify-content">
+        <div class="modal-content">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="container rounded bg-white mt-5">
+            <div class="row d-flex justify-content-center">
+              <div class="p-3 py-5">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <div class="d-flex flex-row align-items-center back">
+                    <i class="fa fa-long-arrow-left mr-1 mb-1"></i>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-md-12">
+                    <span class="smallText">Location ID</span
+                    ><input
+                      type="text"
+                      class="form-control"
+                      id="locId"
+                      placeholder="Location ID"
+                      value=""
+                      readonly
+                    />
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col-md-12">
+                    <span class="smallText">Location Name</span
+                    ><input
+                      type="text"
+                      class="form-control"
+                      id="locName"
+                      placeholder="Location Name"
+                      name="Edit"
+                      value=""
+                      readonly
+                    />
+                  </div>
+                  <div class="mt-5 text-right">
+                    <button
+                      class="btn btn-primary profile-button editProfile"
+                      type="button"
+                    >
+                      Edit Profile</button
+                    ><button
+                      class="btn btn-primary profile-button"
+                      type="submit"
+                      id="saveProfileLoc"
+                    >
+                      Save Profile</button
+                    ><button
+                      class="btn btn-danger profile-button"
+                      type="button"
+                      id="deleteProfile"
+                    >
+                      Delete Profile
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
