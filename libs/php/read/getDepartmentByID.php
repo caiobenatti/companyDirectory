@@ -33,9 +33,8 @@
 
 	// $_REQUEST used for development / debugging. Remember to cange to $_POST for production
 
-	$query = 'SELECT id, name, locationID FROM department WHERE id = ' . $_REQUEST['id'];
+	$query = 'SELECT department.id, department.name, department.locationID, location.name as location FROM department JOIN location ON department.locationID=location.id WHERE department.id = ' . $_REQUEST['id'];
 
-// $query = 'SELECT department.id, department.name, location.name as location  FROM department JOIN location ON department.locationID = location.id WHERE department.id = ' . $_REQUEST['id'];
 
 	$result = $conn->query($query);
 	
