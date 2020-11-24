@@ -229,12 +229,15 @@ h6:hover {
   background-color: #dbe2ef;
 }
 
-/* @media (max-width: 600px) {
-  .mobileHidden {
-    display: none;
+/* @media (max-width: 418px) {
+  .btn-danger {
+    margin-top: 10px;
   }
-  .mobileShow {
-    display: flex;
+}
+
+@media (max-width: 768px) {
+  .btn-danger {
+    margin-top: 10px;
   }
 } */
 
@@ -245,6 +248,9 @@ h6:hover {
   .mobileShow {
     display: flex;
   }
+  /* .btn-danger {
+    margin-top: 10px;
+  } */
 }
 
 table.dataTable thead .sorting:after,

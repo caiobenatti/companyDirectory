@@ -1,12 +1,14 @@
-let employees;
 let xs = [];
 let ys = [];
 let dataDump;
-let charP = [];
 let label;
 let myChart = null;
 
 // Event listener
+$(".nav a").on("click", function () {
+  $(".navbar-toggler").click();
+});
+
 $(document).on("click", "#buttonEmp", function (e) {
   getEmpDet(
     JSON.stringify(this.value.split(" ")[1]),
@@ -27,32 +29,46 @@ $(document).on("click", "#buttonLoc", function (e) {
 
 $(document).on("click", "#buttonAdd", function (e) {
   if ($(this).val() == "employee") {
-    alert("Employee");
+    $("#addEmpModal").modal("show");
+    $(".location").empty();
+    $(".department").empty();
+    getEmpDept();
+    getLocation();
   } else if ($(this).val() == "departments") {
     $(".location").empty();
     getLocation();
     $("#addDeptModal").modal("show");
-  } else {
+  } else if ($(this).val() == "locations") {
     $("#addLocModal").modal("show");
+  }
+});
+
+$(document).on("click", "#showGraph", function (e) {
+  if ($(this).val() == "employee") {
+    graphDepartment();
+  } else if ($(this).val() == "departments") {
+    graphDepartment();
+  } else if ($(this).val() == "locations") {
+    graphLocation();
   }
 });
 
 $(".editProfile").click(function () {
   $("input[name='Edit']").removeAttr("readonly");
-  $("#department").prop("disabled", false);
+  $(".department").prop("disabled", false);
   $(".location").prop("disabled", false);
 });
 
 $("#saveProfileDept").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
-  saveDept();
+  saveDeptartment();
   getDepartments();
   $("#deptModal").modal("hide");
 });
 
 $("#saveProfileLoc").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
-  saveLoc();
+  saveLocation();
   getAllLocations();
   $("#locModal").modal("hide");
 });
@@ -69,13 +85,13 @@ $(".close").click(function () {
 });
 
 $("#saveAddDept").click(function () {
-  addDept();
+  addDeptartment();
   getDepartments();
   $("#addDeptModal").modal("hide");
 });
 
 $("#saveAddLoc").click(function () {
-  addLoc();
+  addLocation();
   getAllLocations();
   $("#addLocModal").modal("hide");
 });
@@ -100,19 +116,16 @@ $("#deleteLocation").click(function () {
 });
 
 $("#navbarDashboard").click(function () {
-  graphLocation();
   getAll();
   $("#buttonToggle").show();
 });
 
 $("#navbarEmployees").click(function () {
-  graphLocation();
   getAll();
   $("#buttonToggle").show();
 });
 
 $("#navbarDepartments").click(function () {
-  graphDepartment();
   getDepartments();
   $("#buttonToggle").hide();
 });
@@ -131,7 +144,7 @@ function getAll() {
     success: function (result) {
       if (result.status.code == 200) {
         console.log(result);
-        graphDepartment();
+
         showEmp(result);
       }
     },
@@ -150,6 +163,7 @@ function getDepartments() {
         $("#mainList").html("");
         $("#headerMain").html("Departments");
         $("#buttonAdd").val("departments");
+        $("#showGraph").val("departments");
         $("#trHeader").append(`
         <th class="th-sm" scope="col">#</th>
         <th class="th-sm" scope="col">Department ID</th>      
@@ -158,7 +172,6 @@ function getDepartments() {
         <th class="th-sm mobileHidden" scope="col">Employees</th>
 
               <th scope="col">Actions</th>`);
-        graphDepartment();
 
         for (let i = 0; i < Object.keys(result.data).length; i++) {
           $("#mainList").append(`
@@ -194,6 +207,7 @@ function getAllLocations() {
         $("#mainList").html("");
         $("#headerMain").html("Locations");
         $("#buttonAdd").val("locations");
+        $("#showGraph").val("locations");
         $("#trHeader").append(`
         <th class="th-sm" scope="col">#</th>
         <th class="th-sm" scope="col">Location ID</th>      
@@ -201,7 +215,6 @@ function getAllLocations() {
         <th class="th-sm mobileHidden" scope="col">Departments</th>
         <th class="th-sm mobileHidden" scope="col">Employees</th>
         <th scope="col">Actions</th>`);
-        graphLocation();
 
         for (let i = 0; i < Object.keys(result.data).length; i++) {
           $("#mainList").append(`
@@ -271,7 +284,7 @@ function getEmpDet(firstName, lastName) {
     success: function (result) {
       if (result.status.code == 200) {
         console.log(result);
-        $("#department").empty();
+        $(".department").empty();
         $(".location").empty();
         $("#fullName").html(
           `${result.data[0].firstName} ${result.data[0].lastName}`
@@ -282,7 +295,7 @@ function getEmpDet(firstName, lastName) {
         $("#lastName").val(result.data[0].lastName);
         $("#email").val(result.data[0].email);
         $("#id").val(result.data[0].id);
-        $("#department").append(
+        $(".department").append(
           `<option value="${result.data[0].deptId}">${result.data[0].department}</option>`
         );
         $(".location").append(
@@ -389,6 +402,7 @@ function showEmp(result) {
   $("#mainList").html("");
   $("#headerMain").html("Employees");
   $("#buttonAdd").val("employee");
+  $("#showGraph").val("employee");
   $("#trHeader").append(`
         <th class="th-sm" scope="col">#</th>
         <th class="th-sm" scope="col">First name</th>
@@ -428,18 +442,18 @@ function getEmpDept() {
       console.log(result);
       if (result.status.code == 200) {
         for (let i = 0; i < Object.keys(result.data).length; i++) {
-          $("#department").append(
+          $(".department").append(
             "<option value=" +
               result.data[i].id +
               ">" +
               result.data[i].name +
               "</option>"
           );
-          if (result["data"][i]["name"] == $("#department").val()) {
-            $("#department").val(result.data[i].id);
+          if (result["data"][i]["name"] == $(".department").val()) {
+            $(".department").val(result.data[i].id);
           }
         }
-        $("#department").prop("disabled", true);
+        // $(".department").prop("disabled", true);
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -534,7 +548,7 @@ function saveProfile() {
   });
 }
 
-function saveDept() {
+function saveDeptartment() {
   $.ajax({
     url: "libs/php/update/updateDeptDetails.php",
     type: "POST",
@@ -556,7 +570,7 @@ function saveDept() {
   });
 }
 
-function saveLoc() {
+function saveLocation() {
   $.ajax({
     url: "libs/php/update/updateLocDetails.php",
     type: "POST",
@@ -578,7 +592,32 @@ function saveLoc() {
 }
 
 //Functions to add new Employee record, Department and Location
-function addDept() {
+function addEmployee() {
+  $.ajax({
+    url: "libs/php/create/insertEmployee.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      firstName: JSON.stringify($("#addFirstName").val()),
+      lastName: JSON.stringify($("#addLastName").val()),
+      email: JSON.stringify($("#addEmail").val()),
+      department: JSON.stringify($("#addDeptEmp").val()),
+      location: JSON.stringify($("#addEmpLocation").val()),
+      jobTitle: JSON.stringify($("#addJobTitle").val()),
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        console.log(result);
+        console.log("Success");
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      console.log(`Database error: ${jqXHR} ${textStatus} ${errorThrown}`);
+    },
+  });
+}
+
+function addDeptartment() {
   $.ajax({
     url: "libs/php/create/insertDepartment.php",
     type: "POST",
@@ -599,7 +638,7 @@ function addDept() {
   });
 }
 
-function addLoc() {
+function addLocation() {
   $.ajax({
     url: "libs/php/create/insertLocation.php",
     type: "POST",

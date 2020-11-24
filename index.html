@@ -102,6 +102,7 @@
         aria-controls="sidebarMenu"
         aria-expanded="false"
         aria-label="Toggle navigation"
+        id="navToggle"
       >
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -331,7 +332,7 @@
                       <span class="smallText">Department</span
                       ><select
                         type="text"
-                        class="form-control"
+                        class="form-control department"
                         placeholder="Department"
                         id="department"
                         value=""
@@ -365,7 +366,7 @@
                       />
                     </div>
                   </div>
-                  <div class="mt-5 text-right">
+                  <div class="mt-5 text-center">
                     <button
                       class="btn btn-primary profile-button editProfile"
                       type="button"
@@ -394,13 +395,13 @@
     </div>
 
     <!-- Modal Add Employee -->
-    <!-- <div
+    <div
       class="modal fade bd-example-modal-lg"
       tabindex="-1"
       role="dialog"
       aria-labelledby="myLargeModalLabel"
       aria-hidden="true"
-      id="empModal"
+      id="addEmpModal"
     >
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -443,8 +444,6 @@
                         id="firstName"
                         placeholder="First Name"
                         value="Name"
-                        name="Edit"
-                        readonly
                       />
                     </div>
                     <div class="col-md-6">
@@ -453,11 +452,8 @@
                         type="text"
                         class="form-control"
                         value=""
-                        readonly
-                        name="Edit"
                         id="lastName"
                         placeholder="Last Name"
-                        readonly
                       />
                     </div>
                   </div>
@@ -470,8 +466,6 @@
                         placeholder="Email"
                         id="email"
                         value=""
-                        name="Edit"
-                        readonly
                       />
                     </div>
                     <div class="col-md-6">
@@ -491,12 +485,10 @@
                       <span class="smallText">Department</span
                       ><select
                         type="text"
-                        class="form-control"
+                        class="form-control department"
                         placeholder="Department"
-                        id="department"
+                        id="departmentAddEmp"
                         value=""
-                        name="Edit"
-                        readonly
                       ></select>
                     </div>
                     <div class="col-md-6">
@@ -506,8 +498,6 @@
                         class="form-control location"
                         value=""
                         placeholder="Location"
-                        name="Edit"
-                        readonly
                       ></select>
                     </div>
                   </div>
@@ -520,29 +510,22 @@
                         placeholder="Job Title"
                         id="jobtitle"
                         value=""
-                        name="Edit"
-                        readonly
                       />
                     </div>
                   </div>
                   <div class="mt-5 text-right">
                     <button
-                      class="btn btn-primary profile-button editProfile"
-                      type="button"
-                    >
-                      Edit Profile</button
-                    ><button
                       class="btn btn-primary profile-button"
                       type="submit"
                       id="saveProfile"
                     >
-                      Save Profile</button
+                      Add</button
                     ><button
                       class="btn btn-danger profile-button"
                       type="button"
-                      id="deleteProfile"
+                      data-dismiss="modal"
                     >
-                      Delete Profile
+                      Cancel
                     </button>
                   </div>
                 </div>
@@ -551,19 +534,19 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- MODAL Departments -->
 
     <div
-      class="modal fade bd-example-modal-lg"
+      class="modal fade"
       tabindex="-1"
       role="dialog"
       aria-labelledby="myLargeModalLabel"
       aria-hidden="true"
       id="deptModal"
     >
-      <div class="modal-dialog modal-lg d-flex justify-content">
+      <div class="modal-dialog d-flex justify-content">
         <div class="modal-content">
           <button
             type="button"
@@ -712,7 +695,7 @@
                     type="submit"
                     id="saveAddDept"
                   >
-                    Save Profile</button
+                    Add</button
                   ><button
                     class="btn btn-danger profile-button"
                     type="button"
@@ -797,7 +780,7 @@
                     >
                       Save Profile</button
                     ><button
-                      class="btn btn-danger profile-button mt-5"
+                      class="btn btn-danger profile-button"
                       type="button"
                       id="deleteLocation"
                     >
@@ -859,7 +842,7 @@
                       type="submit"
                       id="saveAddLoc"
                     >
-                      Save Location</button
+                      Add</button
                     ><button
                       class="btn btn-danger profile-button"
                       type="button"
