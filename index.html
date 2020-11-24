@@ -393,6 +393,166 @@
       </div>
     </div>
 
+    <!-- Modal Add Employee -->
+    <!-- <div
+      class="modal fade bd-example-modal-lg"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="myLargeModalLabel"
+      aria-hidden="true"
+      id="empModal"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="container rounded bg-white mt-5">
+            <div class="row">
+              <div class="col-md-4 border-right">
+                <div
+                  class="d-flex flex-column align-items-center text-center p-3 py-5"
+                >
+                  <i class="fas fa-user fa-4x"></i>
+                  <br />
+                  <p class="font-weight-bold" id="fullName"></p>
+                  <span class="text-black-50" id="emailHeader"></span>
+                  <span id="locationHeader"></span>
+                </div>
+              </div>
+              <div class="col-md-8">
+                <div class="p-3 py-5">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-3"
+                  >
+                    <div class="d-flex flex-row align-items-center back">
+                      <i class="fa fa-long-arrow-left mr-1 mb-1"></i>
+                    </div>
+                  </div>
+                  <div class="row mt-2">
+                    <div class="col-md-6">
+                      <span class="smallText">First Name</span
+                      ><input
+                        type="text"
+                        class="form-control"
+                        id="firstName"
+                        placeholder="First Name"
+                        value="Name"
+                        name="Edit"
+                        readonly
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <span class="smallText">Last Name</span
+                      ><input
+                        type="text"
+                        class="form-control"
+                        value=""
+                        readonly
+                        name="Edit"
+                        id="lastName"
+                        placeholder="Last Name"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <span class="smallText">Email</span
+                      ><input
+                        type="email"
+                        class="form-control"
+                        placeholder="Email"
+                        id="email"
+                        value=""
+                        name="Edit"
+                        readonly
+                      />
+                    </div>
+                    <div class="col-md-6">
+                      <span class="smallText">Employee ID</span
+                      ><input
+                        type="text"
+                        class="form-control"
+                        value=""
+                        id="id"
+                        placeholder="ID"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <span class="smallText">Department</span
+                      ><select
+                        type="text"
+                        class="form-control"
+                        placeholder="Department"
+                        id="department"
+                        value=""
+                        name="Edit"
+                        readonly
+                      ></select>
+                    </div>
+                    <div class="col-md-6">
+                      <span class="smallText">Location</span
+                      ><select
+                        type="text"
+                        class="form-control location"
+                        value=""
+                        placeholder="Location"
+                        name="Edit"
+                        readonly
+                      ></select>
+                    </div>
+                  </div>
+                  <div class="row mt-3">
+                    <div class="col-md-6">
+                      <span class="smallText">Job Title</span
+                      ><input
+                        type="text"
+                        class="form-control"
+                        placeholder="Job Title"
+                        id="jobtitle"
+                        value=""
+                        name="Edit"
+                        readonly
+                      />
+                    </div>
+                  </div>
+                  <div class="mt-5 text-right">
+                    <button
+                      class="btn btn-primary profile-button editProfile"
+                      type="button"
+                    >
+                      Edit Profile</button
+                    ><button
+                      class="btn btn-primary profile-button"
+                      type="submit"
+                      id="saveProfile"
+                    >
+                      Save Profile</button
+                    ><button
+                      class="btn btn-danger profile-button"
+                      type="button"
+                      id="deleteProfile"
+                    >
+                      Delete Profile
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
     <!-- MODAL Departments -->
 
     <div
@@ -554,7 +714,7 @@
                   >
                     Save Profile</button
                   ><button
-                    class="btn btn-danger profile-button cancel"
+                    class="btn btn-danger profile-button"
                     type="button"
                     data-dismiss="modal"
                   >
@@ -571,14 +731,14 @@
     <!-- MODAL Locations -->
 
     <div
-      class="modal fade bd-example-modal-lg"
+      class="modal fade bd-example-modal-sm"
       tabindex="-1"
       role="dialog"
       aria-labelledby="myLargeModalLabel"
       aria-hidden="true"
       id="locModal"
     >
-      <div class="modal-dialog modal-lg d-flex justify-content">
+      <div class="modal-dialog modal-sm d-flex justify-content">
         <div class="modal-content">
           <button
             type="button"
@@ -624,7 +784,7 @@
                       readonly
                     />
                   </div>
-                  <div class="mt-5 text-right">
+                  <div class="mt-5 text-center">
                     <button
                       class="btn btn-primary profile-button editProfile"
                       type="button"
@@ -637,11 +797,75 @@
                     >
                       Save Profile</button
                     ><button
-                      class="btn btn-danger profile-button"
+                      class="btn btn-danger profile-button mt-5"
                       type="button"
-                      id="deleteProfile"
+                      id="deleteLocation"
                     >
                       Delete Profile
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Add Location -->
+
+    <div
+      class="modal fade bd-example-modal-sm"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="modalAddLocation"
+      aria-hidden="true"
+      id="addLocModal"
+    >
+      <div class="modal-dialog modal-sm d-flex justify-content">
+        <div class="modal-content">
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <div class="container rounded bg-white mt-5">
+            <div class="row d-flex justify-content-center">
+              <div class="p-3 py-5">
+                <div
+                  class="d-flex justify-content-between align-items-center mb-3"
+                >
+                  <div class="d-flex flex-row align-items-center back">
+                    <i class="fa fa-long-arrow-left mr-1 mb-1"></i>
+                  </div>
+                </div>
+                <div class="row mt-3">
+                  <div class="col-md-12">
+                    <span class="smallText">Location Name</span
+                    ><input
+                      type="text"
+                      class="form-control"
+                      id="addLocName"
+                      placeholder="Location Name"
+                      value=""
+                    />
+                  </div>
+                  <div class="mt-5 ml-auto mr-auto">
+                    <button
+                      class="btn btn-primary profile-button"
+                      type="submit"
+                      id="saveAddLoc"
+                    >
+                      Save Location</button
+                    ><button
+                      class="btn btn-danger profile-button"
+                      type="button"
+                      data-dismiss="modal"
+                    >
+                      Cancel
                     </button>
                   </div>
                 </div>
