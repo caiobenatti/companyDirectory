@@ -84,6 +84,13 @@ $("#searchText").keyup(function () {
   searchBar(txt);
 });
 
+$("#deleteDepartment").click(function () {
+  $("input[name='Edit']").attr("readonly", "readonly");
+  deleteDepartment($("#deptId").val());
+  getDepartments();
+  $("#deptModal").modal("hide");
+});
+
 $("#navbarDashboard").click(function () {
   graphLocation();
   getAll();
@@ -579,6 +586,27 @@ function addDept() {
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(`Database error: ${jqXHR} ${textStatus} ${errorThrown}`);
+    },
+  });
+}
+
+// Functions to delete Employee, Department and Location
+function deleteDepartment(deptId) {
+  $.ajax({
+    url: "libs/php/delete/deleteDepartmentByID.php",
+    type: "POST",
+    dataType: "json",
+    data: {
+      id: deptId,
+    },
+    success: function (result) {
+      if (result.status.code == 200) {
+        console.log(result);
+        console.log("Deleted");
+      }
+    },
+    error: function (jqXHR, textStatus, errorThrown) {
+      alert(`Database error: ${textStatus}`);
     },
   });
 }
