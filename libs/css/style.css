@@ -68,7 +68,6 @@ h6:hover {
 #login {
   display: flex;
   align-items: center;
-  display: none;
 }
 
 .form-signin {
@@ -229,17 +228,17 @@ h6:hover {
   background-color: #dbe2ef;
 }
 
-/* @media (max-width: 418px) {
-  .btn-danger {
+@media (max-width: 418px) {
+  .delete {
     margin-top: 10px;
   }
 }
 
 @media (max-width: 768px) {
-  .btn-danger {
+  .delete {
     margin-top: 10px;
   }
-} */
+}
 
 @media (max-width: 992px) {
   .mobileHidden {
@@ -248,9 +247,9 @@ h6:hover {
   .mobileShow {
     display: flex;
   }
-  /* .btn-danger {
+  .delete {
     margin-top: 10px;
-  } */
+  }
 }
 
 table.dataTable thead .sorting:after,

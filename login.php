@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="Company directory page" />
+    <meta name="author" content="Caio Benatti" />
+    <link
+      rel="shortcut icon"
+      href="./libs/misc/database.svg"
+      type="image/x-icon"
+    />
+    <title>Lorem Company Directory</title>
+
+    <!-- bootstrap CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+      integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2"
+      crossorigin="anonymous"
+    />
+
+    <!-- Google fonts CDN -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Custom CSS-->
+    <link href="./libs/css/style.css" rel="stylesheet" />
+
+    <!-- fontawsome CSS -->
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+      integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
+      crossorigin="anonymous"
+    />
+
+    <!-- import jQuery -->
+    <script
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <!-- LOGIN FORM -->
+    <section id="login" class="min-vh-100">
+      <div class="container">
+        <div class="row">
+          <div
+            class="col-xl-5 col-lg-6 col-md-8 col-sm-10 mx-auto text-center form p-4"
+          >
+            <h1 class="text-center login-title">
+              Welcome, sign in to continue.
+            </h1>
+            <div class="account-wall">
+              <p><i class="fas fa-lock 9px"></i></p>
+              <form
+                class="form-signin"
+                method="POST"
+                action="./libs/php/autenticateLogin.php"
+              >
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="companyHR"
+                  required
+                  autofocus
+                  name="userLogIn"
+                  id="userLogIn"
+                />
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="passwordForHR2020"
+                  required
+                  name="passwordLogIn"
+                  id="passwordLogIn"
+                />
+                <button
+                  class="btn btn-lg btn-primary btn-block"
+                  type="submit"
+                  value="submit"
+                  id="signIn"
+                >
+                  Sign in
+                </button>
+                <br />
+                <label class="checkbox pull-left">
+                  <input type="checkbox" value="remember-me" />
+                  Remember me
+                </label>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Bootstrap core JavaScript -->
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Scripts -->
+    <!-- <script>
+      $(document).on("click", "#signIn", function (e) {
+        // $.ajax({
+        //   url: "libs/php/login.php",
+        //   type: "POST",
+        //   dataType: "json",
+        //   data: {
+        //     login: $("#userLogIn").val(),
+        //     password: $("#passwordLogIn").val(),
+        //   },
+        //   success: function (result) {
+        //     if (result.status.code == 200) {
+        //       window.location.replace("index.html");
+        //     } else {
+        //     }
+        //   },
+        // });
+        login();
+      });
+
+      function login() {
+        $.ajax({
+          url: "libs/php/login.php",
+          type: "POST",
+          dataType: "json",
+          data: {
+            login: $("#userLogIn").val(),
+            password: $("#passwordLogIn").val(),
+          },
+          success: function (result) {
+            if (result.status.code == 200) {
+              console.log(result);
+              console.log("Deleted");
+            }
+          },
+          error: function (jqXHR, textStatus, errorThrown) {
+            alert(`Database error: ${textStatus}`);
+          },
+        });
+      }
+    </script> -->
+  </body>
+</html>

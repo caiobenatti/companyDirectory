@@ -41,6 +41,19 @@ INSERT INTO `department` (`id`, `name`, `locationID`) VALUES
 	(12, 'Business Development', 3);
 /*!40000 ALTER TABLE `department` ENABLE KEYS */;
 
+-- Dumping structure for table companydirectory.users
+CREATE TABLE IF NOT EXISTS `users` (
+	`login` varchar(50) DEFAULT NULL,
+	`password` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Dumping data for table companydirectory.credentials: ~1 rows (approximately)
+/*!40000 ALTER TABLE `credentials` DISABLE KEYS */;
+
+INSERT INTO `users` (`login`, `password`) VALUES
+('companyHR', 'passwordForHR2020');
+/*!40000 ALTER TABLE `credentials` ENABLE KEYS */;
+
 -- Dumping structure for table companydirectory.location
 CREATE TABLE IF NOT EXISTS `location` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -60,13 +73,13 @@ INSERT INTO `location` (`id`, `name`) VALUES
 
 -- Dumping structure for table companydirectory.personnel
 CREATE TABLE IF NOT EXISTS `personnel` (
-  `id` int(11) DEFAULT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(50) DEFAULT NULL,
   `lastName` varchar(50) DEFAULT NULL,
   `jobTitle` varchar(50) DEFAULT NULL,
   `email` varchar(50) DEFAULT NULL,
   `departmentID` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=101 DEFAULT CHARSET=utf8;
 
 -- Dumping data for table companydirectory.personnel: ~100 rows (approximately)
 /*!40000 ALTER TABLE `personnel` DISABLE KEYS */;
