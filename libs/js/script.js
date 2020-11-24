@@ -30,8 +30,9 @@ $(document).on("click", "#buttonAdd", function (e) {
     alert("Employee");
   } else if ($(this).val() == "departments") {
     $(".location").empty();
-    getEmpLocation();
+    getLocation();
     $("#addDeptModal").modal("show");
+    $(".location").prop("disabled", false);
   } else {
     alert("Location");
   }
@@ -47,7 +48,7 @@ $("#saveProfileDept").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
   saveDept();
   getDepartments();
-  $("#empModal").modal("hide");
+  $("#deptModal").modal("hide");
 });
 
 $("#saveProfileLoc").click(function () {
@@ -131,6 +132,7 @@ function getDepartments() {
       if (result.status.code == 200) {
         console.log(result);
         $("#trHeader").html("");
+        $("#mainList").html("");
         $("#headerMain").html("Departments");
         $("#buttonAdd").val("departments");
         $("#trHeader").append(`
@@ -143,7 +145,6 @@ function getDepartments() {
               <th scope="col">Actions</th>`);
         graphDepartment();
 
-        $("#mainList").html("");
         for (let i = 0; i < Object.keys(result.data).length; i++) {
           $("#mainList").append(`
                 <tr>
@@ -274,7 +275,7 @@ function getEmpDet(firstName, lastName) {
         $("#jobtitle").val(result.data[0].jobTitle);
       }
       getEmpDept();
-      getEmpLocation();
+      getLocation();
     },
     error: function (jqXHR, textStatus, errorThrown) {
       console.log(`Database error: ${textStatus}`);
@@ -451,7 +452,7 @@ function getLocation() {
             $(".location").val(result.data[i].id);
           }
         }
-        // $("#location").prop("disabled", true);
+        // $(".location").prop("disabled", true);
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -568,7 +569,7 @@ function addDept() {
     dataType: "json",
     data: {
       name: JSON.stringify($("#addDeptName").val()),
-      locationID: JSON.stringify($("#addDeptLocation").val()),
+      locID: JSON.stringify($("#addDeptLocation").val()),
     },
     success: function (result) {
       if (result.status.code == 200) {
