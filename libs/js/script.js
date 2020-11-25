@@ -28,7 +28,6 @@ $(document).on("click", "#buttonEmp", function (e) {
   );
   $(".department").prop("disabled", true);
   $(".location").prop("disabled", true);
-  $("#checkboxEmployee").prop("checked", false);
   $("#empModal").modal("show");
 });
 
@@ -36,7 +35,6 @@ $(document).on("click", "#buttonDept", function (e) {
   getDeptDet(JSON.stringify(this.value));
   $(".department").prop("disabled", true);
   $(".location").prop("disabled", true);
-  $("#checkboxDepartment").prop("checked", false);
   $("#deptModal").modal("show");
 });
 
@@ -44,7 +42,6 @@ $(document).on("click", "#buttonLoc", function (e) {
   getLocDet(JSON.stringify(this.value));
   $(".department").prop("disabled", true);
   $(".location").prop("disabled", true);
-  $("#checkboxLocation").prop("checked", false);
   $("#locModal").modal("show");
 });
 
@@ -64,17 +61,6 @@ $(document).on("click", "#buttonAdd", function (e) {
     $("#addDeptModal").modal("show");
   } else if ($(this).val() == "locations") {
     $("#addLocModal").modal("show");
-  }
-});
-
-// Event handler for Graphs
-$(document).on("click", "#showGraph", function (e) {
-  if ($(this).val() == "employee") {
-    graphDepartment();
-  } else if ($(this).val() == "departments") {
-    graphDepartment();
-  } else if ($(this).val() == "locations") {
-    graphLocation();
   }
 });
 
@@ -127,50 +113,50 @@ $("#searchText").keyup(function () {
 
 // Event handler for delete
 $("#deleteEmployee").click(function () {
-  if ($("#checkboxEmployee").is(":checked")) {
-    var returnVal = confirm("Are you sure?");
-    if (returnVal === true) {
-      $("#checkboxEmployee").attr("checked", returnVal);
-      $("input[name='Edit']").attr("readonly", "readonly");
-      deleteEmployee($("#id").val());
-      $("#empModal").modal("hide");
-      getAll();
-    } else {
-      $("#empModal").modal("hide");
-    }
-  }
+  $("#modalConfirm").modal("show");
+  $("#modal-btn-yes").on("click", function () {
+    $("input[name='Edit']").attr("readonly", "readonly");
+    deleteEmployee($("#id").val());
+    $("#empModal").modal("hide");
+    getAll();
+  });
+  $("#modal-btn-no").on("click", function () {
+    $("#modalConfirm").modal("hide");
+    console.log("no");
+  });
   getAll();
 });
 
 $("#deleteDepartment").click(function () {
-  if ($("#checkboxDepartment").is(":checked")) {
-    var returnVal = confirm("Are you sure?");
-    if (returnVal === true) {
-      $("#checkboxEmployee").attr("checked", returnVal);
-      $("input[name='Edit']").attr("readonly", "readonly");
-      deleteDepartment($("#deptId").val());
-      $("#deptModal").modal("hide");
-      getDepartments();
-    } else {
-      $("#deptModal").modal("hide");
-    }
-  }
+  $("#modalConfirm").modal("show");
+  $("#modal-btn-yes").on("click", function () {
+    $("input[name='Edit']").attr("readonly", "readonly");
+    deleteDepartment($("#deptId").val());
+    $("#deptModal").modal("hide");
+    getDepartments();
+    $("#modalConfirm").modal("hide");
+  });
+  $("#modal-btn-no").on("click", function () {
+    $("#modalConfirm").modal("hide");
+    console.log("no");
+  });
   getDepartments();
 });
 
 $("#deleteLocation").click(function () {
-  if ($("#checkboxLocation").is(":checked")) {
-    var returnVal = confirm("Are you sure?");
-    if (returnVal === true) {
-      $("#checkboxEmployee").attr("checked", returnVal);
-      $("input[name='Edit']").attr("readonly", "readonly");
-      deleteLocation($("#locId").val());
-      $("#locModal").modal("hide");
-      getAllLocations();
-    } else {
-      $("#locModal").modal("hide");
-    }
-  }
+  $("#modalConfirm").modal("show");
+  $("#modal-btn-yes").on("click", function () {
+    $("input[name='Edit']").attr("readonly", "readonly");
+    deleteLocation($("#locId").val());
+    $("#locModal").modal("hide");
+    getAllLocations();
+    $("#modalConfirm").modal("hide");
+    console.log("yes");
+  });
+  $("#modal-btn-no").on("click", function () {
+    $("#modalConfirm").modal("hide");
+    console.log("no");
+  });
   getAllLocations();
 });
 
@@ -192,6 +178,18 @@ $("#navbarDepartments").click(function () {
 
 $("#navbarLocations").click(function () {
   getAllLocations();
+});
+
+$("#navbarGraph").click(function () {
+  graphDepartment();
+  $("#graphsModal").modal("show");
+});
+$("#graphLocations").click(function () {
+  graphLocation();
+  $("#graphsModal").modal("show");
+});
+$("#graphDepartments").click(function () {
+  graphDepartment();
 });
 
 // Functions for populating data
@@ -319,7 +317,6 @@ function getToggleLocs() {
     dataType: "json",
     success: function (result) {
       if (result.status.code == 200) {
-        dataDump = result;
         for (let i = 0; i < Object.keys(result.data).length; i++) {
           $("#toggleLocation").append(`
                   <a class="dropdown-item" href="#" value="${result.data[i].id}" onClick="getEmpByLoc(${result.data[i].id});">${result.data[i].name}</a>`);
@@ -398,11 +395,12 @@ function getDeptDet(id) {
     },
     success: function (result) {
       if (result.status.code == 200) {
+        dataDump = result;
         $(".location").empty();
 
         $("#deptId").val(`${result.data[0].id}`);
         $(".location").append(
-          `<option value="${result.data[0].id}">${result.data[0].location}</option>`
+          `<option value="${result.data[0].locationID}">${result.data[0].location}</option>`
         );
         $("#deptName").val(`${result.data[0].name}`);
       }
