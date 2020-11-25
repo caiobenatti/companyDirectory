@@ -10,6 +10,17 @@ $(".nav a").on("click", function () {
   $(".navbar-toggler").click();
 });
 
+$(".close").click(function () {
+  $("input[name='Edit']").attr("readonly", "readonly");
+});
+
+$(".editProfile").click(function () {
+  $("input[name='Edit']").removeAttr("readonly");
+  $(".department").prop("disabled", false);
+  $(".location").prop("disabled", false);
+});
+
+// Event handler for buttons
 $(document).on("click", "#buttonEmp", function (e) {
   getEmpDet(
     JSON.stringify(this.value.split(" ")[1]),
@@ -41,11 +52,14 @@ $(document).on("click", "#buttonAdd", function (e) {
   if ($(this).val() == "employee") {
     $(".location").empty();
     $(".department").empty();
+    $(".department").prop("disabled", false);
+    $(".location").prop("disabled", false);
     getEmpDept();
     getLocation();
     $("#addEmpModal").modal("show");
   } else if ($(this).val() == "departments") {
     $(".location").empty();
+    $(".location").prop("disabled", false);
     getLocation();
     $("#addDeptModal").modal("show");
   } else if ($(this).val() == "locations") {
@@ -53,6 +67,7 @@ $(document).on("click", "#buttonAdd", function (e) {
   }
 });
 
+// Event handler for Graphs
 $(document).on("click", "#showGraph", function (e) {
   if ($(this).val() == "employee") {
     graphDepartment();
@@ -63,37 +78,29 @@ $(document).on("click", "#showGraph", function (e) {
   }
 });
 
-$(".editProfile").click(function () {
-  $("input[name='Edit']").removeAttr("readonly");
-  $(".department").prop("disabled", false);
-  $(".location").prop("disabled", false);
-});
-
+// Event handler for edit
 $("#saveProfileDept").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
   saveDeptartment();
-  getDepartments();
   $("#deptModal").modal("hide");
+  getDepartments();
 });
 
 $("#saveProfileLoc").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
   saveLocation();
-  getAllLocations();
   $("#locModal").modal("hide");
+  getAllLocations();
 });
 
 $("#saveProfile").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
   saveProfile();
-  getAll();
   $("#empModal").modal("hide");
+  getAll();
 });
 
-$(".close").click(function () {
-  $("input[name='Edit']").attr("readonly", "readonly");
-});
-
+// Event handler for Add
 $("#saveAddDept").click(function () {
   addDeptartment();
   $("#addDeptModal").modal("hide");
@@ -112,11 +119,13 @@ $("#saveAddEmp").click(function () {
   getAll();
 });
 
+// Search bar
 $("#searchText").keyup(function () {
   let txt = $(this).val();
   searchBar(txt);
 });
 
+// Event handler for delete
 $("#deleteEmployee").click(function () {
   if ($("#checkboxEmployee").is(":checked")) {
     var returnVal = confirm("Are you sure?");
@@ -125,6 +134,7 @@ $("#deleteEmployee").click(function () {
       $("input[name='Edit']").attr("readonly", "readonly");
       deleteEmployee($("#id").val());
       $("#empModal").modal("hide");
+      getAll();
     } else {
       $("#empModal").modal("hide");
     }
@@ -140,6 +150,7 @@ $("#deleteDepartment").click(function () {
       $("input[name='Edit']").attr("readonly", "readonly");
       deleteDepartment($("#deptId").val());
       $("#deptModal").modal("hide");
+      getDepartments();
     } else {
       $("#deptModal").modal("hide");
     }
@@ -155,6 +166,7 @@ $("#deleteLocation").click(function () {
       $("input[name='Edit']").attr("readonly", "readonly");
       deleteLocation($("#locId").val());
       $("#locModal").modal("hide");
+      getAllLocations();
     } else {
       $("#locModal").modal("hide");
     }
@@ -162,6 +174,7 @@ $("#deleteLocation").click(function () {
   getAllLocations();
 });
 
+// Event handlers navbar
 $("#navbarDashboard").click(function () {
   getAll();
   $("#buttonToggle").show();
@@ -301,6 +314,7 @@ function getToggleDep() {
     },
   });
 }
+getToggleDep();
 
 function getToggleLocs() {
   $.ajax({
@@ -318,6 +332,8 @@ function getToggleLocs() {
     },
   });
 }
+
+getToggleLocs();
 
 function getEmpDet(firstName, lastName) {
   $.ajax({
@@ -837,43 +853,4 @@ function graphLocation() {
   });
 }
 
-// Login form
-// $(document).on("click", "#signIn", function (e) {
-//   $.ajax({
-//     url: "libs/php/login.php",
-//     type: "POST",
-//     dataType: "json",
-
-//     success: function (result) {
-//       if (result.status.code == 200) {
-//         $("#login").fadeOut();
-//         $("mainContent").fadeIn();
-//         $("#navbar").fadeIn();
-//         getAll();
-//       } else {
-//       }
-//     },
-//   });
-// });
-
-// function login() {
-//   $.ajax({
-//     url: "libs/php/login.php",
-//     type: "POST",
-//     dataType: "json",
-//     data: {
-//       user: ,
-//     },
-//     success: function (result) {
-//       if (result.status.code == 200) {
-//         console.log(result);
-//         console.log("Deleted");
-//       }
-//     },
-//     error: function (jqXHR, textStatus, errorThrown) {
-//       alert(`Database error: ${textStatus}`);
-//     },
-//   });
-// }
 getAll();
-// $("#navbar").hide();
