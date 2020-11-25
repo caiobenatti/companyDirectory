@@ -203,8 +203,6 @@ function getAll() {
     dataType: "json",
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
-
         showEmp(result);
       }
     },
@@ -218,7 +216,6 @@ function getDepartments() {
     dataType: "json",
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
         $("#trHeader").html("");
         $("#mainList").html("");
         $("#headerMain").html("Departments");
@@ -314,7 +311,6 @@ function getToggleDep() {
     },
   });
 }
-getToggleDep();
 
 function getToggleLocs() {
   $.ajax({
@@ -333,8 +329,6 @@ function getToggleLocs() {
   });
 }
 
-getToggleLocs();
-
 function getEmpDet(firstName, lastName) {
   $.ajax({
     url: "libs/php/read/getEmpDetails.php",
@@ -346,7 +340,6 @@ function getEmpDet(firstName, lastName) {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
         $(".department").empty();
         $(".location").empty();
         $("#fullName").html(
@@ -385,7 +378,6 @@ function getLocDet(id) {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
         $("#locId").val(result.data[0].id);
         $("#locName").val(result.data[0].name);
       }
@@ -407,7 +399,7 @@ function getDeptDet(id) {
     success: function (result) {
       if (result.status.code == 200) {
         $(".location").empty();
-        console.log(result);
+
         $("#deptId").val(`${result.data[0].id}`);
         $(".location").append(
           `<option value="${result.data[0].id}">${result.data[0].location}</option>`
@@ -502,7 +494,6 @@ function getEmpDept() {
     type: "GET",
     dataType: "json",
     success: function (result) {
-      console.log(result);
       if (result.status.code == 200) {
         for (let i = 0; i < Object.keys(result.data).length; i++) {
           $(".department").append(
@@ -530,7 +521,6 @@ function getLocation() {
     type: "GET",
     dataType: "json",
     success: function (result) {
-      console.log(result);
       if (result.status.code == 200) {
         for (let i = 0; i < Object.keys(result.data).length; i++) {
           $(".location").append(
@@ -553,6 +543,7 @@ function getLocation() {
   });
 }
 
+// Function for search bar
 function searchBar(txt) {
   $.ajax({
     url: "libs/php/read/getSearchbar.php",
@@ -622,7 +613,6 @@ function saveDeptartment() {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
         console.log("Success");
       }
     },
@@ -643,7 +633,6 @@ function saveLocation() {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
         console.log("Success");
       }
     },
@@ -668,7 +657,6 @@ function addEmployee() {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
         console.log("Success");
       }
     },
@@ -689,7 +677,6 @@ function addDeptartment() {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
         console.log("Success");
       }
     },
@@ -709,7 +696,6 @@ function addLocation() {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
         console.log("Success");
       }
     },
@@ -730,7 +716,6 @@ function deleteEmployee(empId) {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
         console.log("Deleted");
       }
     },
@@ -750,7 +735,6 @@ function deleteDepartment(deptId) {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
         console.log("Deleted");
       }
     },
@@ -770,7 +754,6 @@ function deleteLocation(locId) {
     },
     success: function (result) {
       if (result.status.code == 200) {
-        console.log(result);
         console.log("Deleted");
       }
     },
@@ -854,3 +837,5 @@ function graphLocation() {
 }
 
 getAll();
+getToggleDep();
+getToggleLocs();
