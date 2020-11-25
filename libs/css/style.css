@@ -264,3 +264,20 @@ table.dataTable thead .sorting_desc_disabled:after,
 table.dataTable thead .sorting_desc_disabled:before {
   bottom: 0.5em;
 }
+
+.hideShowPassword-toggle {
+  background-image: url(../misc/wink.svg);
+  border: transparent;
+  background-color: transparent;
+  background-position: 0 center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  height: 100%;
+  overflow: hidden;
+  text-indent: -9999em;
+  width: 44px;
+}
+
+.hideShowPassword-toggle-hide {
+  background-position: -44px center;
+}
