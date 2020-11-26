@@ -161,10 +161,6 @@ $("#deleteLocation").click(function () {
 });
 
 // Event handlers navbar
-$("#navbarDashboard").click(function () {
-  getAll();
-  $("#buttonToggle").show();
-});
 
 $("#navbarEmployees").click(function () {
   getAll();
@@ -301,6 +297,8 @@ function getToggleDep() {
     dataType: "json",
     success: function (result) {
       if (result.status.code == 200) {
+        $("#toggleDepartment").append(`
+                  <a class="dropdown-item" href="#" onClick="getAll()">All</a>`);
         for (let i = 0; i < Object.keys(result.data).length; i++) {
           $("#toggleDepartment").append(`
                   <a class="dropdown-item" href="#" value="${result.data[i].id}" onClick="getEmpByDept(${result.data[i].id});">${result.data[i].name}</a>`);
@@ -316,7 +314,10 @@ function getToggleLocs() {
     type: "GET",
     dataType: "json",
     success: function (result) {
+      console.log(result);
       if (result.status.code == 200) {
+        $("#toggleLocation").append(`
+                  <a class="dropdown-item" href="#" onClick="getAll();">All</a>`);
         for (let i = 0; i < Object.keys(result.data).length; i++) {
           $("#toggleLocation").append(`
                   <a class="dropdown-item" href="#" value="${result.data[i].id}" onClick="getEmpByLoc(${result.data[i].id});">${result.data[i].name}</a>`);
@@ -421,6 +422,7 @@ function getEmpByLoc(id) {
       id: id,
     },
     success: function (result) {
+      console.log(result);
       if (result.status.code == 200) {
         showEmp(result);
       }

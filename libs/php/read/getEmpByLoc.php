@@ -1,5 +1,7 @@
-
 <?php
+
+	// example use from browser
+	// http://localhost/companydirectory/libs/php/getAll.php
 
 	// remove next two lines for production
 	
