@@ -69,45 +69,39 @@ $("#saveProfileDept").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
   saveDeptartment();
   $("#deptModal").modal("hide");
-  getDepartments();
 });
 
 $("#saveProfileLoc").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
   saveLocation();
   $("#locModal").modal("hide");
-  getAllLocations();
 });
 
 $("#saveProfile").click(function () {
   $("input[name='Edit']").attr("readonly", "readonly");
   saveProfile();
   $("#empModal").modal("hide");
-  getAll();
 });
 
 // Event handler for Add
 $("#saveAddDept").click(function () {
   addDeptartment();
   $("#addDeptModal").modal("hide");
-  getDepartments();
 });
 
 $("#saveAddLoc").click(function () {
   addLocation();
   $("#addLocModal").modal("hide");
-  getAllLocations();
 });
 
 $("#saveAddEmp").click(function () {
   addEmployee();
   $("#addEmpModal").modal("hide");
-  getAll();
 });
 
 // Search bar
-$("#searchText").keyup(function () {
-  let txt = $(this).val();
+$("#buttonSearch").click(function () {
+  let txt = $("#searchText").val();
   searchBar(txt);
 });
 
@@ -118,7 +112,6 @@ $("#deleteEmployee").click(function () {
     $("input[name='Edit']").attr("readonly", "readonly");
     deleteEmployee($("#id").val());
     $("#empModal").modal("hide");
-    getAll();
   });
   $("#modal-btn-no").on("click", function () {
     $("#modalConfirm").modal("hide");
@@ -133,7 +126,6 @@ $("#deleteDepartment").click(function () {
     $("input[name='Edit']").attr("readonly", "readonly");
     deleteDepartment($("#deptId").val());
     $("#deptModal").modal("hide");
-    getDepartments();
     $("#modalConfirm").modal("hide");
   });
   $("#modal-btn-no").on("click", function () {
@@ -149,7 +141,6 @@ $("#deleteLocation").click(function () {
     $("input[name='Edit']").attr("readonly", "readonly");
     deleteLocation($("#locId").val());
     $("#locModal").modal("hide");
-    getAllLocations();
     $("#modalConfirm").modal("hide");
     console.log("yes");
   });
@@ -548,7 +539,7 @@ function searchBar(txt) {
   $.ajax({
     url: "libs/php/read/getSearchbar.php",
     type: "POST",
-    data: { txt },
+    data: { txt: txt },
     dataType: "json",
     success: function (result) {
       $("#mainList").html("");
@@ -658,6 +649,7 @@ function addEmployee() {
     success: function (result) {
       if (result.status.code == 200) {
         console.log("Success");
+        getAll();
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -678,6 +670,7 @@ function addDeptartment() {
     success: function (result) {
       if (result.status.code == 200) {
         console.log("Success");
+        getDepartments();
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -697,6 +690,7 @@ function addLocation() {
     success: function (result) {
       if (result.status.code == 200) {
         console.log("Success");
+        getAllLocations();
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -717,6 +711,7 @@ function deleteEmployee(empId) {
     success: function (result) {
       if (result.status.code == 200) {
         console.log("Deleted");
+        getAll();
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
@@ -727,19 +722,34 @@ function deleteEmployee(empId) {
 
 function deleteDepartment(deptId) {
   $.ajax({
-    url: "libs/php/delete/deleteDepartmentByID.php",
+    url: "libs/php/read/getConfirmDelete.php",
     type: "POST",
     dataType: "json",
     data: {
       id: deptId,
     },
     success: function (result) {
-      if (result.status.code == 200) {
-        console.log("Deleted");
+      if (result.data[0].deptCount >= 1) {
+        alert("You can't delete a Department with Employees linked to it");
+      } else {
+        $.ajax({
+          url: "libs/php/delete/deleteDepartmentByID.php",
+          type: "POST",
+          dataType: "json",
+          data: {
+            id: deptId,
+          },
+          success: function (result) {
+            if (result.status.code == 200) {
+              console.log("Deleted");
+              getDepartments();
+            }
+          },
+        });
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {
-      alert(`Database error: ${textStatus}`);
+      console.log(`Database error: ${textStatus}`);
     },
   });
 }
@@ -755,6 +765,7 @@ function deleteLocation(locId) {
     success: function (result) {
       if (result.status.code == 200) {
         console.log("Deleted");
+        getAllLocations();
       }
     },
     error: function (jqXHR, textStatus, errorThrown) {

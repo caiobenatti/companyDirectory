@@ -50,13 +50,23 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <input
-          class="form-control w-100"
-          type="text"
-          placeholder="Search"
-          aria-label="Search"
-          id="searchText"
-        />
+        <div class="input-group mr-auto">
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Search"
+            aria-label="Search"
+            id="searchText"
+          />
+          <div class="input-group-append">
+            <button
+              class="input-group-text btn btn-primary btn-sm m-0 waves-effect"
+              id="buttonSearch"
+            >
+              Search
+            </button>
+          </div>
+        </div>
         <ul class="navbar-nav px-3" id="signOut">
           <li class="nav-item text-nowrap">
             <a class="nav-link" href="index.html">Sign out</a>
