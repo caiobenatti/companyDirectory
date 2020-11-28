@@ -539,9 +539,12 @@ function searchBar(txt) {
   $.ajax({
     url: "libs/php/read/getSearchbar.php",
     type: "POST",
-    data: { txt: txt },
-    dataType: "json",
+    data: {
+      txt: txt,
+    },
+    dataType: "JSON",
     success: function (result) {
+      console.log(result);
       $("#mainList").html("");
       $("#headerMain").html("Search Result");
       for (let i = 0; i < Object.keys(result.data).length; i++) {
