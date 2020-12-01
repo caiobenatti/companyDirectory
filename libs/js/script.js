@@ -733,7 +733,7 @@ function deleteDepartment(deptId) {
     },
     success: function (result) {
       if (result.data[0].deptCount >= 1) {
-        alert("You can't delete a Department with Employees linked to it");
+        $("#modalAlert").modal("show");
       } else {
         $.ajax({
           url: "libs/php/delete/deleteDepartmentByID.php",

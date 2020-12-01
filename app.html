@@ -304,19 +304,19 @@
                       class="btn btn-primary profile-button editProfile"
                       type="button"
                     >
-                      Edit Profile</button
+                      Edit</button
                     ><button
                       class="btn btn-primary profile-button"
                       type="submit"
                       id="saveProfile"
                     >
-                      Save Profile</button
+                      Save</button
                     ><button
                       class="btn btn-danger profile-button delete"
                       type="button"
                       id="deleteEmployee"
                     >
-                      Delete Profile</button
+                      Delete</button
                     ><br />
                   </div>
                 </div>
@@ -554,7 +554,7 @@
                     type="button"
                     id="deleteDepartment"
                   >
-                    Delete Department</button
+                    Delete</button
                   ><br />
                 </div>
               </div>
@@ -697,19 +697,19 @@
                       class="btn btn-primary profile-button editProfile"
                       type="button"
                     >
-                      Edit Profile</button
+                      Edit</button
                     ><button
                       class="btn btn-primary profile-button"
                       type="submit"
                       id="saveProfileLoc"
                     >
-                      Save Profile</button
+                      Save</button
                     ><button
                       class="btn btn-danger profile-button"
                       type="button"
                       id="deleteLocation"
                     >
-                      Delete Profile</button
+                      Delete</button
                     ><br />
                   </div>
                 </div>
@@ -869,6 +869,41 @@
             </button>
             <button type="button" class="btn btn-primary" id="modal-btn-no">
               No
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Alert -->
+    <div
+      class="modal fade"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="mySmallModalLabel"
+      aria-hidden="true"
+      id="modalAlert"
+    >
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            ></button>
+            <h4 class="modal-title mr-auto" id="myModalLabel">Sorry</h4>
+          </div>
+          <div class="modal-body">
+            <p>
+              You cant delete an Department whilst theres employees linked to
+              it.
+            </p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" data-dismiss="modal">
+              Ok
             </button>
           </div>
         </div>
